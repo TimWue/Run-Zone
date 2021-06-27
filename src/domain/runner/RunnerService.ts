@@ -1,15 +1,25 @@
 import { RunnerRepository } from "./RunnerRepository";
+import { RunRepository } from "../run/RunRepository";
+import { Run } from "../run/Run";
 
 export interface RunnerService {
-  getTracks: (runnerName: string) => Promise<number[]>;
+  getRuns: (runnerName: string) => Promise<Run[]>;
 }
 
 export const createRunnerService = (
-  runnerRepository: RunnerRepository
+  runnerRepository: RunnerRepository,
+  runRepository: RunRepository
 ): RunnerService => {
   return {
-    getTracks(runnerName: string): Promise<number[]> {
-      return runnerRepository.getTracks(runnerName);
+    async getRuns(runnerName: string): Promise<Run[]> {
+      const runs: Run[] = [];
+      const runIds = await runnerRepository.getTracks(runnerName);
+      await Promise.all(
+        runIds.map(async (runId) => {
+          runs.push(await runRepository.getRun(runId));
+        })
+      );
+      return runs;
     },
   };
 };

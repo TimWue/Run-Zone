@@ -1,4 +1,4 @@
 export interface Runner {
-    runnerName : string;
-
+  runnerName: string;
+  runnerRunIds: number[];
 }

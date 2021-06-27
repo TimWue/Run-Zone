@@ -1,3 +1,5 @@
+import { Run } from "./Run";
+
 export interface RunRepository {
-  getTrackNumbers: (runnerName: string) => Promise<number[]>;
+  getRun: (runId: number) => Promise<Run>;
 }
