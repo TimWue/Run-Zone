@@ -1,10 +1,10 @@
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useContext, useEffect, useState } from "react";
 import { MapContainer, Polygon, TileLayer } from "react-leaflet";
 import { RunnerRunsController } from "../../../controller/runnerRuns/useRunnerRunsController";
 import { Run } from "../../../domain/run/Run";
-import { runners } from "../../../resources/Runners";
-import { TrackPoint } from "../../../domain/run/TrackPoint";
-import { latLng, LatLngTuple } from "leaflet";
+import {} from "leaflet";
+import { RunnerContext } from "../../../context/RunnerContext";
+import { createMapService } from "../../../domain/map/MapService";
 
 interface Props {
   runnersRunController: RunnerRunsController;
@@ -12,36 +12,20 @@ interface Props {
 export const MapMask: FunctionComponent<Props> = ({
   runnersRunController,
 }: Props) => {
-  const [runs, setRuns] = useState<Run[]>([]);
-  const [runner, setRunner] = useState<string>("Tim");
+  const mapService = createMapService();
+  const { runner, runs, setRuns } = useContext(RunnerContext);
   useEffect(() => {
-    runnersRunController.getRunsOfRunner(runner).then((runsReceived) => {
-      setRuns(runsReceived);
-    });
+    runnersRunController
+      .getRunsOfRunner(runner.runnerName)
+      .then((runsReceived) => {
+        setRuns(runsReceived);
+      });
   }, [runner]);
-
-  //TODO: As Hook + Coordinates not right
-  const track2tuple = (trackpoints: TrackPoint[]) => {
-    const tuple = [];
-    for (let index in trackpoints) {
-      const ll: LatLngTuple = [
-        trackpoints[index].latitude,
-        trackpoints[index].longitude,
-      ];
-      tuple.push(ll);
-    }
-    return tuple;
-  };
 
   const purpleOptions = { color: "red" };
 
   return (
     <div>
-      <div>
-        {runs.map((run) => {
-          return <div key={run.runId}>{run.runId} </div>;
-        })}
-      </div>
       <MapContainer
         className="basicMap"
         center={[55, 10]}
@@ -56,7 +40,7 @@ export const MapMask: FunctionComponent<Props> = ({
           return (
             <Polygon
               pathOptions={purpleOptions}
-              positions={track2tuple(run.track.trackPoints)}
+              positions={mapService.track2Polygon(run.track.trackPoints)}
             />
           );
         })}

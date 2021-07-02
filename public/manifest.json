@@ -18,6 +18,22 @@
       "sizes": "512x512"
     }
   ],
+  "share_target": {
+    "action": "/photos",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "name",
+      "text": "description",
+      "url": "link",
+      "files": [
+        {
+          "name": "myImage",
+          "accept": ["image/jpeg", "image/png"]
+        }
+      ]
+    }
+  },
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",

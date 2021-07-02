@@ -1,9 +1,11 @@
 import { RunnerRepository } from "./RunnerRepository";
 import { RunRepository } from "../run/RunRepository";
 import { Run } from "../run/Run";
+import { Runner } from "./Runner";
 
 export interface RunnerService {
   getRuns: (runnerName: string) => Promise<Run[]>;
+  getRunner: (runnerName: string) => Promise<Runner | undefined>;
 }
 
 export const createRunnerService = (
@@ -20,6 +22,10 @@ export const createRunnerService = (
         })
       );
       return runs;
+    },
+    async getRunner(runnerName: string): Promise<Runner | undefined> {
+      let runner = await runnerRepository.getRunner(runnerName);
+      return runner;
     },
   };
 };
