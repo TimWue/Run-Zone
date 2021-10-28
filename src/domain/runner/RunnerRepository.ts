@@ -6,7 +6,7 @@ export interface RunnerRepository {
   getRunner: (runnerName: string) => Promise<Runner | undefined>;
 }
 
-export const createRunnerRepository = (baseUrl: string): RunnerRepository => {
+export const createRunnerRepository = (): RunnerRepository => {
   return {
     getTracks(runnerName: string): Promise<number[]> {
       let runIds: number[] = [];

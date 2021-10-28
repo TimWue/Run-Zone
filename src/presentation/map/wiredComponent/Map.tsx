@@ -9,9 +9,8 @@ import { createRunRepository } from "../../../domain/run/RunRepository";
 type Props = {};
 
 export const Map: FunctionComponent<Props> = (props: Props) => {
-  const baseUrl = "";
-  const runnerRepository = createRunnerRepository(baseUrl);
-  const runRepository = createRunRepository(baseUrl);
+  const runnerRepository = createRunnerRepository();
+  const runRepository = createRunRepository();
   const runnerService = createRunnerService(runnerRepository, runRepository);
 
   const runnersRunController = useRunnerRunsController(runnerService);

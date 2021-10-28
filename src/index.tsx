@@ -4,11 +4,14 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { RunnerContextProvider } from "./context/RunnerContext";
+import { CurrentRunContextProvider } from "./context/CurrentRunContext";
 
 ReactDOM.render(
   <React.StrictMode>
     <RunnerContextProvider>
-      <App />
+      <CurrentRunContextProvider>
+        <App />
+      </CurrentRunContextProvider>
     </RunnerContextProvider>
   </React.StrictMode>,
   document.getElementById("root")
