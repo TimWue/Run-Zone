@@ -1,4 +1,4 @@
-import { Polygon } from "react-leaflet";
+import { Polyline } from "react-leaflet";
 import { FunctionComponent } from "react";
 import { Run } from "../../../domain/run/Run";
 import { createMapService } from "../../../domain/map/MapService";
@@ -9,14 +9,12 @@ interface Props {
 
 export const RenderRuns: FunctionComponent<Props> = ({ runs }: Props) => {
   const mapService = createMapService();
-  const purpleOptions = { color: "red" };
 
   return (
     <>
       {runs.map((run, index) => {
         return (
-          <Polygon
-            pathOptions={purpleOptions}
+          <Polyline
             positions={mapService.track2Polygon(run.track.trackPoints)}
           />
         );

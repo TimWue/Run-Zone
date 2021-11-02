@@ -18,7 +18,8 @@ export const createRunnerService = (
       const runIds = await runnerRepository.getTracks(runnerName);
       await Promise.all(
         runIds.map(async (runId) => {
-          runs.push(await runRepository.getRun(runId));
+          const run = await runRepository.getRun(runId);
+          run && runs.push(run);
         })
       );
       return runs;
