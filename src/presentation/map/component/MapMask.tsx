@@ -23,7 +23,7 @@ export const MapMask: FunctionComponent<Props> = ({
   }, [runner]);
 
   return (
-    <div style={{ width: "100%", height: "50%" }}>
+    <div style={{ width: "50%", height: "100%" }}>
       <MapContainer
         className="basicMap"
         center={[0, 0]}
