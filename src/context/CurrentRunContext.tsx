@@ -9,6 +9,7 @@ interface CurrentRunProps {
   stopRun: () => void;
   setSpeed: (speed: number | null) => void;
   addTrackPoint: (trackPoint: TrackPoint) => void;
+  resetRun: () => void;
 }
 export const CurrentRunContext = createContext<CurrentRunProps>(
   {} as CurrentRunProps
@@ -24,6 +25,12 @@ export const CurrentRunContextProvider = ({ children }: ProviderProps) => {
   const [run, setRun] = useState<Run>();
   const [speed, setSpeed] = useState<number | null>(null);
 
+  const resetRun = () => {
+    setRun(undefined);
+    setStartTime(undefined);
+    setSpeed(null);
+    setTrackPoints([]);
+  };
   const addTrackPoint = (trackPoint: TrackPoint) => {
     console.log("Add TrackPoint: ", trackPoint);
     setTrackPoints((oldState) => [...oldState, trackPoint]);
@@ -53,6 +60,7 @@ export const CurrentRunContextProvider = ({ children }: ProviderProps) => {
         startRun,
         stopRun,
         addTrackPoint,
+        resetRun,
       }}
     >
       {children}

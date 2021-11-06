@@ -23,12 +23,17 @@ export const MapMask: FunctionComponent<Props> = ({
   }, [runner]);
 
   return (
-    <div style={{ width: "50%", height: "100%" }}>
+    <div style={{ width: "100%", height: "50%" }}>
       <MapContainer
         className="basicMap"
         center={[0, 0]}
-        zoom={13}
+        zoom={20}
         scrollWheelZoom={false}
+        style={{
+          width: "100%",
+          height: "600px",
+          borderRadius: "8px",
+        }}
       >
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
