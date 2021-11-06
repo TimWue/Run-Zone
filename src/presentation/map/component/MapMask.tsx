@@ -4,6 +4,7 @@ import { RunnerRunsController } from "../../../controller/runnerRuns/useRunnerRu
 import { RunnerContext } from "../../../context/RunnerContext";
 import { RenderRuns } from "./RenderRuns";
 import { RenderPosition } from "./RenderPosition";
+import ShowRunControl from "./ShowRunControl";
 
 interface Props {
   runnersRunController: RunnerRunsController;
@@ -23,7 +24,7 @@ export const MapMask: FunctionComponent<Props> = ({
   }, [runner]);
 
   return (
-    <div style={{ width: "100%", height: "50%" }}>
+    <>
       <MapContainer
         className="basicMap"
         center={[0, 0]}
@@ -31,7 +32,7 @@ export const MapMask: FunctionComponent<Props> = ({
         scrollWheelZoom={false}
         style={{
           width: "100%",
-          height: "600px",
+          height: "400px",
           borderRadius: "8px",
         }}
       >
@@ -41,8 +42,8 @@ export const MapMask: FunctionComponent<Props> = ({
         />
         {showRuns && <RenderRuns runs={runs} />}
         <RenderPosition />
+        <ShowRunControl setShowRuns={setShowRuns} />
       </MapContainer>
-      <button onClick={() => setShowRuns(!showRuns)}>Show Runs</button>
-    </div>
+    </>
   );
 };

@@ -3,13 +3,14 @@ import { Run } from "../domain/run/Run";
 import { TrackPoint } from "../domain/run/TrackPoint";
 
 interface CurrentRunProps {
-  speed: number | null;
+  startTime: number | undefined;
   run: Run | undefined;
   startRun: () => void;
   stopRun: () => void;
-  setSpeed: (speed: number | null) => void;
   addTrackPoint: (trackPoint: TrackPoint) => void;
   resetRun: () => void;
+  isRunning: boolean;
+  setIsRunning: (isRunning: boolean) => void;
 }
 export const CurrentRunContext = createContext<CurrentRunProps>(
   {} as CurrentRunProps
@@ -23,12 +24,11 @@ export const CurrentRunContextProvider = ({ children }: ProviderProps) => {
   const [startTime, setStartTime] = useState<number>();
   const [trackPoints, setTrackPoints] = useState<TrackPoint[]>([]);
   const [run, setRun] = useState<Run>();
-  const [speed, setSpeed] = useState<number | null>(null);
+  const [isRunning, setIsRunning] = useState(false);
 
   const resetRun = () => {
     setRun(undefined);
     setStartTime(undefined);
-    setSpeed(null);
     setTrackPoints([]);
   };
   const addTrackPoint = (trackPoint: TrackPoint) => {
@@ -39,6 +39,7 @@ export const CurrentRunContextProvider = ({ children }: ProviderProps) => {
   const startRun = () => {
     console.log("Start Run");
     setStartTime(Date.now());
+    setIsRunning(true);
   };
 
   const stopRun = () => {
@@ -49,13 +50,15 @@ export const CurrentRunContextProvider = ({ children }: ProviderProps) => {
       startTime: startTime ? startTime : Date.now(),
       endTime: Date.now(),
     });
+    setIsRunning(false);
   };
 
   return (
     <CurrentRunContext.Provider
       value={{
-        speed,
-        setSpeed,
+        startTime,
+        isRunning,
+        setIsRunning,
         run,
         startRun,
         stopRun,
