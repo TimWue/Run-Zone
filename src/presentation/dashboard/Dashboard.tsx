@@ -2,6 +2,7 @@ import * as React from "react";
 import { useContext, useEffect, useState } from "react";
 import { RunnerContext } from "../../context/RunnerContext";
 import { CurrentRunContext } from "../../context/CurrentRunContext";
+import { InfoCard } from "./InfoCard";
 
 type Props = {};
 export const Dashboard = (props: Props) => {
@@ -29,9 +30,24 @@ export const Dashboard = (props: Props) => {
   }, [isRunning]);
 
   return (
-    <>
-      <h3>Speed: {runnerSpeed}</h3>
-      <h3>Time: {new Date(runTime).toISOString().substr(11, 8)}</h3>
-    </>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        width: "100%",
+        height: "50%",
+        padding: "20px",
+        flexWrap: "wrap",
+      }}
+    >
+      <InfoCard
+        property={"Speed"}
+        value={runnerSpeed ? runnerSpeed + " [km/h]" : "--"}
+      />
+      <InfoCard
+        property={"Time"}
+        value={new Date(runTime).toISOString().substr(11, 8)}
+      />
+    </div>
   );
 };

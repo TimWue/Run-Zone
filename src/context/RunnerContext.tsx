@@ -5,7 +5,7 @@ import { LatLng } from "leaflet";
 
 interface RunnerProps {
   runnerPosition: LatLng | undefined;
-  runnerSpeed: number | null;
+  runnerSpeed: string | null;
   runner: Runner;
   setRunner: (runner: Runner) => void;
   runs: Run[];
@@ -31,7 +31,7 @@ interface ProviderProps {
 export const RunnerContextProvider = ({ children }: ProviderProps) => {
   const [runs, setRuns] = useState<Run[]>([]);
   const [runnerPosition, setRunnerPosition] = useState<LatLng>();
-  const [runnerSpeed, setRunnerSpeed] = useState<number | null>(null);
+  const [runnerSpeed, setRunnerSpeed] = useState<string | null>(null);
 
   const [runner, setRunner] = useState<Runner>({
     runnerName: "",
@@ -59,7 +59,8 @@ export const RunnerContextProvider = ({ children }: ProviderProps) => {
     setRunnerPosition(
       new LatLng(geoPosition.coords.latitude, geoPosition.coords.longitude)
     );
-    setRunnerSpeed(geoPosition.coords.speed);
+    geoPosition.coords.speed &&
+      setRunnerSpeed((geoPosition.coords.speed * 3.6).toFixed(1));
   };
 
   useEffect(() => {

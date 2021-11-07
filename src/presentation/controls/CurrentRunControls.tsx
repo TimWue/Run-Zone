@@ -2,6 +2,7 @@ import { FunctionComponent, useContext, useEffect, useState } from "react";
 import { CurrentRunContext } from "../../context/CurrentRunContext";
 import { RunnerContext } from "../../context/RunnerContext";
 import { createRunRepository } from "../../domain/run/RunRepository";
+import { Button, ButtonGroup } from "react-bootstrap";
 
 interface Props {}
 
@@ -45,19 +46,19 @@ export const CurrentRunControls: FunctionComponent<Props> = () => {
   };
 
   return (
-    <>
-      <button onClick={handleStart} disabled={isRunning}>
+    <ButtonGroup size="lg">
+      <Button onClick={handleStart} disabled={isRunning} variant="dark">
         Start
-      </button>
-      <button onClick={handleStop} disabled={!isRunning}>
+      </Button>
+      <Button onClick={handleStop} disabled={!isRunning} variant="dark">
         Stop
-      </button>
-      <button onClick={handleSave} disabled={isRunning}>
+      </Button>
+      <Button onClick={handleSave} disabled={isRunning} variant="dark">
         Save
-      </button>
-      <button onClick={handleReset} disabled={isRunning}>
+      </Button>
+      <Button onClick={handleReset} disabled={isRunning} variant="dark">
         Reset
-      </button>
-    </>
+      </Button>
+    </ButtonGroup>
   );
 };

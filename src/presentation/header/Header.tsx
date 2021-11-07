@@ -8,12 +8,22 @@ export const Header = (props: Props) => {
   const { runner } = useContext(RunnerContext);
   return (
     <>
-      <div>
-        <h3>Moin {runner.runnerName}</h3>
-      </div>
-      <div>
-        <CurrentRunControls />
-      </div>
+      <h2
+        style={{
+          color: "#eee",
+          fontFamily: "Open Sans Condensed, sans-serif",
+          fontSize: "48px",
+          fontWeight: "bold",
+          lineHeight: "48px",
+          padding: "0 5px",
+          textAlign: "center",
+          textTransform: "uppercase",
+          minWidth: "200px",
+        }}
+      >
+        Moin {runner.runnerName}
+      </h2>
+      <CurrentRunControls />
     </>
   );
 };
