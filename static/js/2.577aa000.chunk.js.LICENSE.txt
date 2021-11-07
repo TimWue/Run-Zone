@@ -53,6 +53,12 @@ object-assign
          * along with MarchingSquaresJS.  If not, see <http://www.gnu.org/licenses/>.
          */
 
+/*!
+  Copyright (c) 2018 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+
 /**
        * @license GNU Affero General Public License.
        * Copyright (c) 2015, 2015 Ronny Lorenz <ronny@tbi.univie.ac.at>
