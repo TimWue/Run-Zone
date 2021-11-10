@@ -5,12 +5,15 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { RunnerContextProvider } from "./context/RunnerContext";
 import { CurrentRunContextProvider } from "./context/CurrentRunContext";
+import { HashRouter } from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
     <RunnerContextProvider>
       <CurrentRunContextProvider>
-        <App />
+        <HashRouter>
+          <App />
+        </HashRouter>
       </CurrentRunContextProvider>
     </RunnerContextProvider>
   </React.StrictMode>,

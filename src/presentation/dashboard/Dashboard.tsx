@@ -36,7 +36,7 @@ export const Dashboard = (props: Props) => {
         flexDirection: "row",
         width: "100%",
         height: "50%",
-        padding: "20px",
+        padding: "5px",
         flexWrap: "wrap",
       }}
     >

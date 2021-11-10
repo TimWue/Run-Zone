@@ -12,17 +12,17 @@ export const InfoCard = ({ property, value }: Props) => {
     <div
       style={{
         width: "20%",
-        minWidth: "200px",
+        minWidth: "120px",
         backgroundColor: "#555",
         borderRadius: "10px",
         padding: "10px",
-        margin: "10px",
+        margin: "10px 5px 10px 5px",
       }}
     >
       <div
         style={{
           fontFamily: "Open Sans Condensed, sans-serif",
-          fontSize: "36px",
+          fontSize: "28px",
           fontWeight: "bold",
           textTransform: "uppercase",
           color: "#eee",

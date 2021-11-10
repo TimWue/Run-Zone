@@ -2,6 +2,7 @@ import * as React from "react";
 import { useContext } from "react";
 import { RunnerContext } from "../../context/RunnerContext";
 import { CurrentRunControls } from "../controls/CurrentRunControls";
+import { Navigation } from "../navigation/Navigation";
 
 type Props = {};
 export const Header = (props: Props) => {
@@ -23,7 +24,7 @@ export const Header = (props: Props) => {
       >
         Moin {runner.runnerName}
       </h2>
-      <CurrentRunControls />
+      <Navigation />
     </>
   );
 };
