@@ -1,16 +1,12 @@
 import React, { useContext } from "react";
 import "./App.css";
-import { Map } from "./presentation/map/wiredComponent/Map";
-import { Dashboard } from "./presentation/dashboard/Dashboard";
 import { RunnerContext } from "./context/RunnerContext";
 import { Login } from "./presentation/login/Login";
-import { Header } from "./presentation/header/Header";
-import { Container, Row } from "react-bootstrap";
-import { CurrentRunControls } from "./presentation/controls/CurrentRunControls";
 import { StartRun } from "./presentation/startRun/StartRun";
-import { Route, Switch } from "react-router-dom";
 import { AbsolvedRuns } from "./presentation/absolvedRuns/AbsolvedRuns";
 import { Path } from "./presentation/shared/Path";
+import { Route, Routes } from "react-router-dom";
+import { Header } from "./presentation/header/Header";
 
 function App() {
   const { runner } = useContext(RunnerContext);
@@ -30,13 +26,13 @@ function App() {
               margin: "20px 0 20px 0",
             }}
           >
-            <Header />
+            {<Header />}
           </div>
-          <Switch>
-            <Route path={Path.ROOT} component={App} />
-            <Route path={Path.NEW} component={StartRun} />
-            <Route path={Path.RUNS} component={AbsolvedRuns} />
-          </Switch>
+
+          <Routes>
+            <Route path={Path.NEW} element={<StartRun />} />
+            <Route path={Path.RUNS} element={<AbsolvedRuns />} />
+          </Routes>
         </div>
       )}
     </>
