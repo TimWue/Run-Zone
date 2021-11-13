@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import "./App.css";
 import { RunnerContext } from "./context/RunnerContext";
 import { Login } from "./presentation/login/Login";
@@ -7,9 +7,15 @@ import { AbsolvedRuns } from "./presentation/absolvedRuns/AbsolvedRuns";
 import { Path } from "./presentation/shared/Path";
 import { Route, Routes } from "react-router-dom";
 import { Header } from "./presentation/header/Header";
+import { createRunRepository } from "./domain/run/RunRepository";
 
 function App() {
-  const { runner } = useContext(RunnerContext);
+  const { runner, setRuns } = useContext(RunnerContext);
+  const runRepository = createRunRepository();
+
+  useEffect(() => {
+    setRuns(runRepository.getAllRuns());
+  }, [runner]);
   return (
     <>
       {runner?.runnerName === "" ? (

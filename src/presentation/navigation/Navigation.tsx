@@ -1,14 +1,14 @@
 import { FunctionComponent } from "react";
-import { Link } from "react-router-dom";
 import { Path } from "../shared/Path";
+import { NavLink } from "./NavLink";
 
 interface Props {}
 
 export const Navigation: FunctionComponent<Props> = () => {
   return (
-    <>
-      <Link to={Path.NEW}>New </Link>
-      <Link to={Path.RUNS}>Runs </Link>
-    </>
+    <div>
+      <NavLink to={Path.NEW} value={"Neu"} />
+      <NavLink to={Path.RUNS} value={"Läufe"} />
+    </div>
   );
 };

@@ -6,22 +6,11 @@ import { RenderRuns } from "./RenderRuns";
 import { RenderPosition } from "./RenderPosition";
 import ShowRunControl from "./ShowRunControl";
 
-interface Props {
-  runnersRunController: RunnerRunsController;
-}
-export const MapMask: FunctionComponent<Props> = ({
-  runnersRunController,
-}: Props) => {
-  const { runner, runs, setRuns } = useContext(RunnerContext);
-  const [showRuns, setShowRuns] = useState(false);
+interface Props {}
 
-  useEffect(() => {
-    runnersRunController
-      .getRunsOfRunner(runner.runnerName)
-      .then((runsReceived) => {
-        setRuns(runsReceived);
-      });
-  }, [runner]);
+export const MapMask: FunctionComponent<Props> = ({}: Props) => {
+  const { runs } = useContext(RunnerContext);
+  const [showRuns, setShowRuns] = useState(false);
 
   return (
     <>

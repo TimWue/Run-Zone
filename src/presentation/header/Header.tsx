@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useContext } from "react";
 import { RunnerContext } from "../../context/RunnerContext";
-import { CurrentRunControls } from "../controls/CurrentRunControls";
 import { Navigation } from "../navigation/Navigation";
 
 type Props = {};
