@@ -1,26 +1,29 @@
-import { runners } from "../../resources/Runners";
 import { Runner } from "./Runner";
+import { LocalStorageKeys } from "../../presentation/shared/LocalStorageKeys";
 
 export interface RunnerRepository {
-  getTracks: (runnerName: string) => Promise<number[]>;
-  getRunner: (runnerName: string) => Promise<Runner | undefined>;
+  getRunner: () => Runner | undefined;
+  setRunner: (runner: Runner) => void;
+  removeRunner: () => void;
 }
 
 export const createRunnerRepository = (): RunnerRepository => {
+  const getRunner = () => {
+    const runner = localStorage.getItem(LocalStorageKeys.RUNNER);
+    return runner ? (JSON.parse(runner) as Runner) : undefined;
+  };
+
+  const setRunner = (runner: Runner) => {
+    localStorage.setItem(LocalStorageKeys.RUNNER, JSON.stringify(runner));
+  };
+
+  const removeRunner = () => {
+    localStorage.removeItem(LocalStorageKeys.RUNNER);
+  };
+
   return {
-    getTracks(runnerName: string): Promise<number[]> {
-      let runIds: number[] = [];
-      for (let index in runners) {
-        if (runners[index].runnerName === runnerName) {
-          runIds = runners[index].runnerRunIds;
-        }
-      }
-      return Promise.resolve(runIds);
-    },
-    getRunner(runnerName: string): Promise<Runner | undefined> {
-      return Promise.resolve(
-        runners.find((runner: Runner) => runner.runnerName === runnerName)
-      );
-    },
+    getRunner,
+    setRunner,
+    removeRunner,
   };
 };

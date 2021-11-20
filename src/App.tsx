@@ -7,41 +7,52 @@ import { AbsolvedRuns } from "./presentation/absolvedRuns/AbsolvedRuns";
 import { Path } from "./presentation/shared/Path";
 import { Route, Routes } from "react-router-dom";
 import { Header } from "./presentation/header/Header";
-import { createRunRepository } from "./domain/run/RunRepository";
+import { Home } from "./presentation/home/Home";
+import { useRunsController } from "./controller/runs/useRunsController";
 
 function App() {
-  const { runner, setRuns } = useContext(RunnerContext);
-  const runRepository = createRunRepository();
+  const { runner } = useContext(RunnerContext);
+  const runsController = useRunsController();
 
   useEffect(() => {
-    setRuns(runRepository.getAllRuns());
-  }, [runner]);
-  return (
-    <>
-      {runner?.runnerName === "" ? (
-        <Login />
-      ) : (
-        <div style={{ width: "80%", height: "100%", margin: "auto" }}>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              padding: " 1% 0 1% 0",
-              flexWrap: "wrap",
-              margin: "20px 0 20px 0",
-            }}
-          >
-            {<Header />}
-          </div>
+    runsController.initRuns();
+    runsController.initRunner();
+  }, []);
 
-          <Routes>
-            <Route path={Path.NEW} element={<StartRun />} />
-            <Route path={Path.RUNS} element={<AbsolvedRuns />} />
-          </Routes>
-        </div>
-      )}
-    </>
+  if (!runner) {
+    return (
+      <div
+        style={{
+          width: "80%",
+          height: "100%",
+          margin: "auto",
+        }}
+      >
+        <Login />
+      </div>
+    );
+  }
+  return (
+    <div style={{ width: "80%", height: "100%", margin: "auto" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          padding: " 1% 0 1% 0",
+          flexWrap: "wrap",
+          margin: "20px 0 20px 0",
+        }}
+      >
+        <Header />
+      </div>
+
+      <Routes>
+        <Route path={Path.ROOT} element={<Home />} />
+        <Route path={Path.NEW} element={<StartRun />} />
+        <Route path={Path.RUNS} element={<AbsolvedRuns />} />
+      </Routes>
+    </div>
   );
 }
 

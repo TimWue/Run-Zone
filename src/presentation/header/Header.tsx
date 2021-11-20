@@ -1,11 +1,8 @@
 import * as React from "react";
-import { useContext } from "react";
-import { RunnerContext } from "../../context/RunnerContext";
 import { Navigation } from "../navigation/Navigation";
 
 type Props = {};
 export const Header = (props: Props) => {
-  const { runner } = useContext(RunnerContext);
   return (
     <>
       <h2
@@ -21,7 +18,7 @@ export const Header = (props: Props) => {
           minWidth: "200px",
         }}
       >
-        Moin {runner.runnerName}
+        Run Zone
       </h2>
       <Navigation />
     </>

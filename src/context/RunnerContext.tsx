@@ -6,8 +6,8 @@ import { LatLng } from "leaflet";
 interface RunnerProps {
   runnerPosition: LatLng | undefined;
   runnerSpeed: string | null;
-  runner: Runner;
-  setRunner: (runner: Runner) => void;
+  runner: Runner | undefined;
+  setRunner: (runner: Runner | undefined) => void;
   runs: Run[];
   setRuns: (runs: Run[]) => void;
   addRun: (run: Run) => void;
@@ -16,9 +16,9 @@ interface RunnerProps {
 export const RunnerContext = createContext<RunnerProps>({
   runnerPosition: undefined,
   runnerSpeed: null,
-  runner: { runnerName: "", runnerRunIds: [] },
+  runner: undefined,
   runs: [],
-  setRunner(runner: Runner): void {},
+  setRunner(runner: Runner | undefined): void {},
   setRuns(runs: Run[]): void {},
   addRun(run: Run): void {},
   setRunnerPosition(position: LatLng): void {},
@@ -32,11 +32,7 @@ export const RunnerContextProvider = ({ children }: ProviderProps) => {
   const [runs, setRuns] = useState<Run[]>([]);
   const [runnerPosition, setRunnerPosition] = useState<LatLng>();
   const [runnerSpeed, setRunnerSpeed] = useState<string | null>(null);
-
-  const [runner, setRunner] = useState<Runner>({
-    runnerName: "",
-    runnerRunIds: [],
-  });
+  const [runner, setRunner] = useState<Runner | undefined>();
   const geoLocationOptions = { enableHighAccuracy: true };
 
   const addRun = (run: Run) => {

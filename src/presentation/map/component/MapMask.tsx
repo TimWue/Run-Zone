@@ -1,6 +1,5 @@
 import { FunctionComponent, useContext, useEffect, useState } from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
-import { RunnerRunsController } from "../../../controller/runnerRuns/useRunnerRunsController";
 import { RunnerContext } from "../../../context/RunnerContext";
 import { RenderRuns } from "./RenderRuns";
 import { RenderPosition } from "./RenderPosition";
