@@ -19,6 +19,7 @@ import { createRunRepository } from "../../domain/run/RunRepository";
 import { createMapService } from "../../domain/map/MapService";
 import { LatLng } from "leaflet";
 import { ViewChanger } from "./ViewChanger";
+import styled from "styled-components";
 
 interface Props {}
 
@@ -50,21 +51,16 @@ export const AbsolvedRuns: FunctionComponent<Props> = () => {
   return (
     <>
       {currentRun && (
-        <div style={{ color: "white" }}>
+        <RunDateTime>
           {new Date(currentRun.startTime).toUTCString()}
-        </div>
+        </RunDateTime>
       )}
 
-      <MapContainer
+      <PastRunMap
         className="basicMap"
         center={[0, 0]}
         zoom={20}
         scrollWheelZoom={false}
-        style={{
-          width: "100%",
-          height: "400px",
-          borderRadius: "8px",
-        }}
       >
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -76,25 +72,41 @@ export const AbsolvedRuns: FunctionComponent<Props> = () => {
             positions={mapService.track2Polygon(currentRun.track.trackPoints)}
           />
         )}
-      </MapContainer>
+      </PastRunMap>
+
       <div>
-        <Button
-          style={{ width: "50%" }}
+        <RunSelectButton
           variant={"dark"}
           disabled={index <= 0}
           onClick={() => clickHandle(-1)}
         >
           Zurück
-        </Button>
-        <Button
-          style={{ width: "50%" }}
+        </RunSelectButton>
+
+        <RunSelectButton
           variant={"dark"}
           disabled={index >= runs.length - 1}
           onClick={() => clickHandle(1)}
         >
           Vor
-        </Button>
+        </RunSelectButton>
       </div>
     </>
   );
 };
+
+const PastRunMap = styled(MapContainer)`
+  width: 100%;
+  height: 400px;
+  border-radius: 8px;
+`;
+
+const RunSelectButton = styled(Button)`
+  width: 50%;
+`;
+
+const RunDateTime = styled.div`
+  color: white;
+  text-align: center;
+  padding: 2px;
+`;

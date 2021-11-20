@@ -4,8 +4,7 @@ import { RunnerContext } from "../../context/RunnerContext";
 import styled from "styled-components";
 import { Styles } from "../shared/Styles";
 
-type Props = {};
-export const Home = (props: Props) => {
+export const Home = () => {
   const { runner } = useContext(RunnerContext);
 
   return (

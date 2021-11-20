@@ -1,26 +1,24 @@
 import * as React from "react";
 import { Navigation } from "../navigation/Navigation";
+import styled from "styled-components";
 
-type Props = {};
-export const Header = (props: Props) => {
+export const Header = () => {
   return (
     <>
-      <h2
-        style={{
-          color: "#eee",
-          fontFamily: "Open Sans Condensed, sans-serif",
-          fontSize: "48px",
-          fontWeight: "bold",
-          lineHeight: "48px",
-          padding: "0 5px",
-          textAlign: "center",
-          textTransform: "uppercase",
-          minWidth: "200px",
-        }}
-      >
-        Run Zone
-      </h2>
+      <Logo>Run Zone</Logo>
       <Navigation />
     </>
   );
 };
+
+const Logo = styled.h2`
+  color: #eee;
+  font-family: Open Sans Condensed, sans-serif;
+  font-size: 48px;
+  font-weight: bold;
+  line-height: 48px;
+  padding: 0 5px;
+  text-align: center;
+  text-transform: uppercase;
+  min-width: 200px;
+`;

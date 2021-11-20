@@ -3,18 +3,15 @@ import { useContext, useEffect, useState } from "react";
 import { RunnerContext } from "../../context/RunnerContext";
 import { CurrentRunContext } from "../../context/CurrentRunContext";
 import { InfoCard } from "./InfoCard";
+import styled from "styled-components";
 
-type Props = {};
-export const Dashboard = (props: Props) => {
+export const Dashboard = () => {
   const { runnerSpeed } = useContext(RunnerContext);
   const { startTime, isRunning } = useContext(CurrentRunContext);
   const [runTime, setRunTime] = useState(0);
   const [runInterval, setRunInterval] = useState<any>();
 
   const updateRunTime = () => {
-    console.log("RunTime: ", runTime);
-    console.log("StartTime: ", startTime);
-    console.log("Now: ", Date.now());
     startTime && setRunTime(Date.now() - startTime);
   };
 
@@ -30,16 +27,7 @@ export const Dashboard = (props: Props) => {
   }, [isRunning]);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        width: "100%",
-        height: "50%",
-        padding: "5px",
-        flexWrap: "wrap",
-      }}
-    >
+    <Container>
       <InfoCard
         property={"Speed"}
         value={runnerSpeed ? runnerSpeed + " [km/h]" : "--"}
@@ -48,6 +36,15 @@ export const Dashboard = (props: Props) => {
         property={"Time"}
         value={new Date(runTime).toISOString().substr(11, 8)}
       />
-    </div>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 50%;
+  padding: 5px;
+  flex-wrap: wrap;
+`;
