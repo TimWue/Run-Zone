@@ -6,9 +6,7 @@ import { useRunsController } from "../../controller/runs/useRunsController";
 import styled from "styled-components";
 import { Styles } from "../shared/Styles";
 
-interface Props {}
-
-export const Navigation: FunctionComponent<Props> = () => {
+export const Navigation: FunctionComponent = () => {
   const controller = useRunsController();
   return (
     <div>

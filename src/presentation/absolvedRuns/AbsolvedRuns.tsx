@@ -27,13 +27,27 @@ export const AbsolvedRuns: FunctionComponent<Props> = () => {
   const { runs } = useContext(RunnerContext);
   const [currentRun, setCurrentRun] = useState<Run>();
   const [index, setIndex] = useState(0);
-  const [center, setCenter] = useState(new LatLng(0, 0));
+
+  const centerFromRun = (run: Run): LatLng => {
+    const startPoint = run.track.trackPoints[0];
+    return new LatLng(startPoint.latitude, startPoint.longitude);
+  };
+
+  const [center, setCenter] = useState(
+    runs.length > 0 ? centerFromRun(runs[0]) : new LatLng(0, 0)
+  );
   const mapService = createMapService();
 
   useEffect(() => {
+    if (runs.length > 0) {
+      setCurrentRun(runs[0]);
+      setCenter(centerFromRun(runs[0]));
+    }
+  }, []);
+
+  useEffect(() => {
     setCurrentRun(runs[index]);
-    const startPoint = runs[index].track.trackPoints[0];
-    setCenter(new LatLng(startPoint.latitude, startPoint.longitude));
+    setCenter(centerFromRun(runs[index]));
   }, [index]);
 
   const clickHandle = (change: number) => {
@@ -58,7 +72,7 @@ export const AbsolvedRuns: FunctionComponent<Props> = () => {
 
       <PastRunMap
         className="basicMap"
-        center={[0, 0]}
+        center={center}
         zoom={20}
         scrollWheelZoom={false}
       >

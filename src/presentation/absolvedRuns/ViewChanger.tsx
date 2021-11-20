@@ -25,6 +25,7 @@ interface Props {
 
 export const ViewChanger: FunctionComponent<Props> = ({ center }) => {
   const map = useMap();
+
   useEffect(() => {
     map.setView(center);
   }, [center]);
