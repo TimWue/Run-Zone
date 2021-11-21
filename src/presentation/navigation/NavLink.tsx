@@ -9,7 +9,11 @@ interface Props {
 }
 
 export const NavLink: FunctionComponent<Props> = ({ to, value }) => {
-  return <CustomLink to={to}>{value}</CustomLink>;
+  return (
+    <div>
+      <CustomLink to={to}>{value}</CustomLink>
+    </div>
+  );
 };
 
 const CustomLink = styled(Link)`
