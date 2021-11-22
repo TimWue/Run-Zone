@@ -10,6 +10,7 @@ import { Header } from "./presentation/header/Header";
 import { Home } from "./presentation/home/Home";
 import { useRunsController } from "./controller/runs/useRunsController";
 import styled from "styled-components";
+import { BottomNavigation } from "./presentation/navigation/BottomNavigation";
 
 function App() {
   const { runner } = useContext(RunnerContext);
@@ -38,6 +39,7 @@ function App() {
         <Route path={Path.NEW} element={<StartRun />} />
         <Route path={Path.RUNS} element={<AbsolvedRuns />} />
       </Routes>
+      <BottomNavigation />
     </OuterContainer>
   );
 }

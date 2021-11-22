@@ -14,8 +14,6 @@ export const Navigation: FunctionComponent = () => {
     <DropDownButton onClick={() => setShow(!show)}>
       <FontAwesomeIcon icon={faBars} />
       <DropDownContent show={show}>
-        <NavLink to={Path.NEW} value={"Neu"} />
-        <NavLink to={Path.RUNS} value={"Läufe"} />
         <Logout onClick={() => controller.removeRunner()}>Logout</Logout>
       </DropDownContent>
     </DropDownButton>
