@@ -56,42 +56,54 @@ export const AbsolvedRun: FunctionComponent<Props> = ({ run }) => {
           <FontAwesomeIcon icon={faRoute} />
           <ValueContainer>10.2 km</ValueContainer>
         </ValueIconContainer>
+        <DetailButton>Details</DetailButton>
       </InfoContainer>
     </OuterContainer>
   );
 };
 
+const DetailButton = styled.button`
+  max-width: 150px;
+  background-color: ${Styles.BACKGROUND_COLOR_SECOND};
+  color: #282c34;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 5px 5px 10px #282c34;
+  &:active {
+    box-shadow: 0 0;
+  }
+`;
+
 const ValueIconContainer = styled.div`
   color: white;
-  font-size: 20px;
+  font-size: ${Styles.FONT_SIZE_NORMAL};
   font-family: ${Styles.FONT_FAMILY_MAIN};
   display: inline-flex;
   margin: 5px;
 `;
 
 const ValueContainer = styled.div`
-  margin-left: 20px;
+  margin-left: 10px;
 `;
 
 const OuterContainer = styled.div`
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  margin: 10px;
   box-shadow: 5px 5px 5px #282c34;
   border-radius: 5px;
+  margin-bottom: 15px;
 `;
 
 const InfoContainer = styled.div`
-  width: 60%;
-  padding: 5px;
+  width: 50%;
+  padding-left: 5px;
   display: flex;
   flex-direction: column;
 `;
 
 const AbsolvedRunMap = styled(MapContainer)`
-  width: 30%;
-  min-width: 200px;
+  width: 150px;
   height: 150px;
   border-radius: 8px;
   border: none;

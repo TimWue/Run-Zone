@@ -26,7 +26,7 @@ const DropDownButton = styled.div`
   position: relative;
   display: inline-block;
   color: white;
-  font-size: 26px;
+  font-size: ${Styles.FONT_SIZE_LARGER};
 `;
 
 interface Props {
@@ -35,17 +35,20 @@ interface Props {
 const DropDownContent = styled.div<Props>`
   color: white;
   background-color: ${Styles.BACKGROUND_COLOR_MAIN};
-
   display: ${(props) => (props.show ? "block" : "none")};
   position: absolute;
-  min-width: 160px;
-  padding: 12px 16px;
   z-index: 1;
-  left: -60px;
+  right: -200%;
+  box-shadow: 0px 0px 10px #282c34;
+  width: 100px;
 `;
-const Logout = styled.a`
-  font-size: 26px;
-  margin: 20px;
+const Logout = styled.div`
+  text-align: center;
+  font-size: ${Styles.FONT_SIZE_LARGER};
   border: none;
   cursor: pointer;
+  &:hover {
+    background-color: aliceblue;
+    color: #282c34;
+  }
 `;

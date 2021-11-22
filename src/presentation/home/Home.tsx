@@ -21,7 +21,7 @@ export const Home = () => {
 const Welcome = styled.h3`
   font-family: ${Styles.FONT_FAMILY_MAIN};
   text-align: center;
-  font-size: 3rem;
+  font-size: ${Styles.FONT_SIZE_LARGE};
   color: white;
 `;
 

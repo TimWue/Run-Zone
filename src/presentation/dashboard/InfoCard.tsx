@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { RunnerContext } from "../../context/RunnerContext";
 import { CurrentRunContext } from "../../context/CurrentRunContext";
 import styled from "styled-components";
+import { Styles } from "../shared/Styles";
 
 type Props = {
   property: string;
@@ -35,9 +36,9 @@ const Content = styled.div`
 `;
 
 const Property = styled(Content)`
-  font-size: 28px;
+  font-size: ${Styles.FONT_SIZE_LARGER};
 `;
 
 const Value = styled(Content)`
-  font-size: 24px;
+  font-size: ${Styles.FONT_SIZE_LARGER};
 `;

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Navigation } from "../navigation/Navigation";
 import styled from "styled-components";
+import { Styles } from "../shared/Styles";
 
 export const Header = () => {
   return (
@@ -14,7 +15,7 @@ export const Header = () => {
 const Logo = styled.h2`
   color: #eee;
   font-family: Open Sans Condensed, sans-serif;
-  font-size: 48px;
+  font-size: ${Styles.FONT_SIZE_LARGER};
   font-weight: bold;
   line-height: 48px;
   padding: 0 5px;

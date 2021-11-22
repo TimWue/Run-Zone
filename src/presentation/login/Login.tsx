@@ -36,7 +36,7 @@ export const Login = (props: Props) => {
 
 const LoginHeader = styled.h3`
   font-family: ${Styles.FONT_FAMILY_MAIN};
-  font-size: 24px;
+  font-size: ${Styles.FONT_SIZE_LARGER};
   text-transform: uppercase;
   color: #343a40;
   font-weight: bold;
