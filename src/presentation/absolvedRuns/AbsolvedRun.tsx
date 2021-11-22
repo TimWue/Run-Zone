@@ -103,8 +103,8 @@ const InfoContainer = styled.div`
 `;
 
 const AbsolvedRunMap = styled(MapContainer)`
-  width: 150px;
-  height: 150px;
+  width: 130px;
+  height: 130px;
   border-radius: 8px;
   border: none;
   margin: 5px;

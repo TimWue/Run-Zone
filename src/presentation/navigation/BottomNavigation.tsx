@@ -59,6 +59,7 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   flex-wrap: nowrap;
+  z-index: 10;
 `;
 
 const NavButton = styled.button`
