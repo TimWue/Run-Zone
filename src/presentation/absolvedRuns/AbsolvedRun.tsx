@@ -108,4 +108,5 @@ const AbsolvedRunMap = styled(MapContainer)`
   border-radius: 8px;
   border: none;
   margin: 5px;
+  z-index: 0:
 `;

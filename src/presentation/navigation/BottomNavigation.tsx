@@ -59,18 +59,18 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   flex-wrap: nowrap;
-  z-index: 10;
+  z-index: 1000;
 `;
 
 const NavButton = styled.button`
-  height: 80px;
+  height: 60px;
   width: 20%;
   display: block;
   color: white;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
-  font-size: ${Styles.FONT_SIZE_LARGE};
+  font-size: ${Styles.FONT_SIZE_LARGER};
   border: 1px solid black;
   background-color: inherit;
 `;
