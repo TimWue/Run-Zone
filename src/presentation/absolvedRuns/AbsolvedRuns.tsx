@@ -21,15 +21,25 @@ import { LatLng } from "leaflet";
 import { ViewChanger } from "./ViewChanger";
 import styled from "styled-components";
 import { AbsolvedRun } from "./AbsolvedRun";
+import { Styles } from "../shared/Styles";
+import { Pagination } from "./Pagination";
 
 interface Props {}
 
 export const AbsolvedRuns: FunctionComponent<Props> = () => {
   const { runs } = useContext(RunnerContext);
+  const [startIndex, setStartIndex] = useState<number>();
+  const [endIndex, setEndIndex] = useState<number>();
 
   return (
     <>
-      {runs.map((run) => (
+      <Pagination
+        n={runs.length}
+        setOuterStartIndex={setStartIndex}
+        setOuterEndIndex={setEndIndex}
+      />
+
+      {runs.slice(startIndex, endIndex).map((run) => (
         <AbsolvedRun run={run} />
       ))}
     </>
