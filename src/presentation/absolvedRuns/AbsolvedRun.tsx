@@ -17,6 +17,8 @@ interface Props {
 }
 
 export const AbsolvedRun: FunctionComponent<Props> = ({ run }) => {
+  const [startPosition, setStartPosition] = useState<number>();
+  const [positionDifference, setPositionDifference] = useState<number>(0);
   const centerFromRun = (run: Run): LatLng => {
     const startPoint = run.track.trackPoints[0];
     return new LatLng(startPoint.latitude, startPoint.longitude);
@@ -24,8 +26,28 @@ export const AbsolvedRun: FunctionComponent<Props> = ({ run }) => {
 
   const mapService = createMapService();
 
+  const touchMoveHandle = (e: React.TouchEvent<HTMLDivElement>) => {
+    console.log("move ", e.targetTouches[0].clientX);
+    setPositionDifference(startPosition! + e.targetTouches[0].clientX);
+  };
+
+  const touchStartHandle = (e: React.TouchEvent<HTMLDivElement>) => {
+    console.log("start ", e.targetTouches[0].clientX);
+    setStartPosition(e.targetTouches[0].clientX);
+  };
+
+  const touchEndHandle = (e: React.TouchEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    console.log("end ", e.changedTouches[0].clientX);
+  };
+
   return (
-    <OuterContainer>
+    <OuterContainer
+      positionDifference={positionDifference}
+      onTouchStart={touchStartHandle}
+      onTouchMove={touchMoveHandle}
+      onTouchEnd={touchEndHandle}
+    >
       <AbsolvedRunMap
         className="basicMap"
         center={centerFromRun(run)}
@@ -86,7 +108,13 @@ const ValueContainer = styled.div`
   margin-left: 10px;
 `;
 
-const OuterContainer = styled.div`
+interface ContainerProps {
+  positionDifference: number;
+}
+
+const OuterContainer = styled.div<ContainerProps>`
+  position: relative;
+  left: ${({ positionDifference }: ContainerProps) => positionDifference};
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -108,5 +136,5 @@ const AbsolvedRunMap = styled(MapContainer)`
   border-radius: 8px;
   border: none;
   margin: 5px;
-  z-index: 0:
+  z-index: 0;
 `;
