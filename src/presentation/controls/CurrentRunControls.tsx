@@ -36,7 +36,11 @@ export const CurrentRunControls: FunctionComponent<Props> = () => {
 
   const handleSave = () => {
     console.log("Save run");
-    runRepository.saveRuns([...runs, run!]);
+    if (runs.length > 0) {
+      runRepository.saveRuns([...runs, run!]);
+    } else {
+      runRepository.saveRuns([run!]);
+    }
     addRun(run!);
   };
 

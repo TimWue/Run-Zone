@@ -36,7 +36,9 @@ export const RunnerContextProvider = ({ children }: ProviderProps) => {
   const geoLocationOptions = { enableHighAccuracy: true };
 
   const addRun = (run: Run) => {
-    setRuns((oldState: Run[]) => [...oldState, run]);
+    setRuns((oldState: Run[]) =>
+      oldState.length > 0 ? [...oldState, run] : [run]
+    );
   };
 
   const startTracking = () => {

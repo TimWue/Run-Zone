@@ -10,6 +10,7 @@ import {
   faCalendar,
   faClock,
   faRoute,
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
@@ -19,6 +20,7 @@ interface Props {
 export const AbsolvedRun: FunctionComponent<Props> = ({ run }) => {
   const [startPosition, setStartPosition] = useState<number>();
   const [positionDifference, setPositionDifference] = useState<number>(0);
+  const [isActive, setIsActive] = useState(false);
   const centerFromRun = (run: Run): LatLng => {
     const startPoint = run.track.trackPoints[0];
     return new LatLng(startPoint.latitude, startPoint.longitude);
@@ -27,13 +29,18 @@ export const AbsolvedRun: FunctionComponent<Props> = ({ run }) => {
   const mapService = createMapService();
 
   const touchMoveHandle = (e: React.TouchEvent<HTMLDivElement>) => {
-    console.log("move ", e.targetTouches[0].clientX);
-    setPositionDifference(startPosition! + e.targetTouches[0].clientX);
+    console.log("move", startPosition! - e.targetTouches[0].clientX);
+    const moveX = e.targetTouches[0].clientX;
+    if (startPosition! - moveX > 50) {
+      setIsActive(true);
+    }
+    //setPositionDifference(startPosition! + e.targetTouches[0].clientX);
   };
 
   const touchStartHandle = (e: React.TouchEvent<HTMLDivElement>) => {
     console.log("start ", e.targetTouches[0].clientX);
     setStartPosition(e.targetTouches[0].clientX);
+    e.preventDefault();
   };
 
   const touchEndHandle = (e: React.TouchEvent<HTMLDivElement>) => {
@@ -43,11 +50,14 @@ export const AbsolvedRun: FunctionComponent<Props> = ({ run }) => {
 
   return (
     <OuterContainer
-      positionDifference={positionDifference}
       onTouchStart={touchStartHandle}
       onTouchMove={touchMoveHandle}
       onTouchEnd={touchEndHandle}
     >
+      <Delete isActive={isActive}>
+        {" "}
+        <FontAwesomeIcon icon={faTrash} />
+      </Delete>
       <AbsolvedRunMap
         className="basicMap"
         center={centerFromRun(run)}
@@ -108,19 +118,37 @@ const ValueContainer = styled.div`
   margin-left: 10px;
 `;
 
-interface ContainerProps {
-  positionDifference: number;
-}
-
-const OuterContainer = styled.div<ContainerProps>`
+const OuterContainer = styled.div`
   position: relative;
-  left: ${({ positionDifference }: ContainerProps) => positionDifference};
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   box-shadow: 5px 5px 5px #282c34;
   border-radius: 5px;
   margin-bottom: 15px;
+  cursor: pointer;
+`;
+
+interface DeleteProps {
+  isActive: boolean;
+}
+
+const Delete = styled.div<DeleteProps>`
+  color: white;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 5px;
+  visibility: ${({ isActive }: DeleteProps) =>
+    isActive ? "visible" : "hidden"};
+  background-color: rgba(52, 58, 64, 0.9);
+  font-size: ${Styles.FONT_SIZE_LARGER};
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const InfoContainer = styled.div`
