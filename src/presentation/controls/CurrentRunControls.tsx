@@ -7,10 +7,9 @@ import { Button, ButtonGroup } from "react-bootstrap";
 interface Props {}
 
 export const CurrentRunControls: FunctionComponent<Props> = () => {
-  const { runnerPosition } = useContext(RunnerContext);
   const { addTrackPoint, startRun, stopRun, run, resetRun, isRunning } =
     useContext(CurrentRunContext);
-  const { addRun, runs } = useContext(RunnerContext);
+  const { addRun, runs, runnerPosition } = useContext(RunnerContext);
   const runRepository = createRunRepository();
 
   useEffect(() => {
@@ -35,7 +34,7 @@ export const CurrentRunControls: FunctionComponent<Props> = () => {
   };
 
   const handleSave = () => {
-    console.log("Save run");
+    console.log("Save run", runs);
     if (runs.length > 0) {
       runRepository.saveRuns([...runs, run!]);
     } else {

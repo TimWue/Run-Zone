@@ -46,8 +46,11 @@ const CustomLink = styled(Link)`
   color: inherit;
   font-size: inherit;
   &:hover {
-    color: inherit;
+    color: white;
     background-color: inherit;
+  }
+  &:focus {
+    color: white;
   }
 `;
 
@@ -66,11 +69,11 @@ const NavButton = styled.button`
   height: 60px;
   width: 20%;
   display: block;
-  color: white;
+  color: #888;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
   font-size: ${Styles.FONT_SIZE_LARGER};
-  border: 1px solid black;
+  border: none;
   background-color: inherit;
 `;

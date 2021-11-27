@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useState } from "react";
 import { Run } from "../domain/run/Run";
 import { TrackPoint } from "../domain/run/TrackPoint";
+import { uuid } from "uuidv4";
 
 interface CurrentRunProps {
   startTime: number | undefined;
@@ -46,6 +47,7 @@ export const CurrentRunContextProvider = ({ children }: ProviderProps) => {
     console.log("Stop Run");
     const track = { trackPoints };
     setRun({
+      runId: uuid(),
       track: track,
       startTime: startTime ? startTime : Date.now(),
       endTime: Date.now(),

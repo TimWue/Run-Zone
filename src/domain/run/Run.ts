@@ -1,7 +1,7 @@
 import { Track } from "./Track";
 
 export interface Run {
-  runId?: number;
+  runId: string;
   startTime: number;
   endTime: number;
   track: Track;
