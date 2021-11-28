@@ -12,6 +12,7 @@ import { useRunsController } from "./controller/runs/useRunsController";
 import styled from "styled-components";
 import { BottomNavigation } from "./presentation/navigation/BottomNavigation";
 import { Styles } from "./presentation/shared/Styles";
+import { Detail } from "./presentation/detail/Detail";
 
 function App() {
   const { runner } = useContext(RunnerContext);
@@ -37,6 +38,7 @@ function App() {
           <Route path={Path.ROOT} element={<Home />} />
           <Route path={Path.NEW} element={<StartRun />} />
           <Route path={Path.RUNS} element={<AbsolvedRuns />} />
+          <Route path={Path.DETAIL} element={<Detail />} />
         </Routes>
       </PageContainer>
       <BottomNavigation />

@@ -37,10 +37,14 @@ interface OverlayProps {
 }
 
 const Container = styled.div<OverlayProps>`
+  /*
+  display: ${({ isActive }: OverlayProps) => (isActive ? "block" : "none")};
+*/
+  display: flex;
   color: white;
   width: inherit;
   height: 100%;
-  z-index: 50;
+  z-index: ${({ isActive }: OverlayProps) => (isActive ? 50 : 30)};
   position: absolute;
   top: 0;
   left: 0;
@@ -48,7 +52,6 @@ const Container = styled.div<OverlayProps>`
   background-color: ${({ isActive }: OverlayProps) =>
     isActive ? "rgba(52, 58, 64, 0.9)" : "rgba(52, 58, 64, 0)"};
   font-size: ${Styles.FONT_SIZE_LARGER};
-  display: flex;
   justify-content: center;
   align-items: center;
 `;

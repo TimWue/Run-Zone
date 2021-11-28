@@ -13,6 +13,8 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { SwipeOverlay } from "../util/SwipeOverlay";
+import { Link } from "react-router-dom";
+import { Path } from "../shared/Path";
 
 interface Props {
   run: Run;
@@ -69,13 +71,14 @@ export const AbsolvedRun: FunctionComponent<Props> = ({
           <FontAwesomeIcon icon={faRoute} />
           <ValueContainer>10.2 km</ValueContainer>
         </ValueIconContainer>
-        <DetailButton>Details</DetailButton>
+        <DetailButton to={Path.RUNS + "/" + run.runId}>Details</DetailButton>
       </InfoContainer>
     </OuterContainer>
   );
 };
 
-const DetailButton = styled.button`
+const DetailButton = styled(Link)`
+  text-align: center;
   max-width: 150px;
   background-color: ${Styles.BACKGROUND_COLOR_SECOND};
   color: #282c34;
@@ -85,6 +88,7 @@ const DetailButton = styled.button`
   &:active {
     box-shadow: 0 0;
   }
+  z-index: 40;
 `;
 
 const ValueIconContainer = styled.div`
