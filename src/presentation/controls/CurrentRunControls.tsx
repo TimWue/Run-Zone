@@ -5,11 +5,13 @@ import { createRunRepository } from "../../domain/run/RunRepository";
 import { Button, ButtonGroup } from "react-bootstrap";
 import styled from "styled-components";
 import { Styles } from "../shared/Styles";
+import { Popup } from "./Popup";
 
 interface Props {}
 
 export const CurrentRunControls: FunctionComponent<Props> = () => {
-  const { addTrackPoint, startRun, stopRun, run, pauseRun, isRunning } =
+  const [show, setShow] = useState(false);
+  const { addTrackPoint, startRun, stopRun, pauseRun, isRunning } =
     useContext(CurrentRunContext);
   const { addRun, runs, runnerPosition } = useContext(RunnerContext);
   const runRepository = createRunRepository();
@@ -41,36 +43,22 @@ export const CurrentRunControls: FunctionComponent<Props> = () => {
           runRepository.saveRuns([finishedRun]);
         }
         addRun(finishedRun);
+        setShow(true);
       }
     });
   };
 
   return (
-    <Buttons>
-      <StartButton onClick={handleStart}>
-        {" "}
-        {isRunning ? "Pause" : "Start"}
-      </StartButton>
-      <EndButton onClick={handleSave}>End</EndButton>
-    </Buttons>
+    <>
+      <Buttons>
+        <StartButton onClick={handleStart}>
+          {isRunning ? "Pause" : "Start"}
+        </StartButton>
+        <EndButton onClick={handleSave}>End</EndButton>
+      </Buttons>
+      <Popup show={show} setShow={setShow} />
+    </>
   );
-
-  /* return (
-    <ButtonGroup size="lg">
-      <Button onClick={handleStart} disabled={isRunning} variant="dark">
-        Start
-      </Button>
-      <Button onClick={handleStop} disabled={!isRunning} variant="dark">
-        Stop
-      </Button>
-      <Button onClick={handleSave} disabled={isRunning} variant="dark">
-        Save
-      </Button>
-      <Button onClick={handleReset} disabled={isRunning} variant="dark">
-        Reset
-      </Button>
-    </ButtonGroup>
-  );*/
 };
 
 const Buttons = styled.div`
