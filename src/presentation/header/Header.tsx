@@ -19,7 +19,7 @@ const HeaderContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
   flex-wrap: wrap;
-  padding: 20px 0 5px 0;
+  padding: 10px 40px 5px 10px;
 `;
 
 const Logo = styled.h2`

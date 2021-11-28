@@ -87,7 +87,6 @@ const ButtonBase = styled.button`
   font-size: ${Styles.FONT_SIZE_NORMAL};
   color: inherit;
   border: none;
-  border-radius: 2px;
   padding: 10px 0;
   font-weight: bolder;
   &:focus {

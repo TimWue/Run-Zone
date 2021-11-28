@@ -24,6 +24,7 @@ export const Menu: FunctionComponent = () => {
 };
 
 const DropDownButton = styled.div`
+  padding-top: 5px;
   position: relative;
   display: inline-block;
   color: white;
