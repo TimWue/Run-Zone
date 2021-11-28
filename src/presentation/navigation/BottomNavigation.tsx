@@ -66,7 +66,7 @@ const Container = styled.div`
 `;
 
 const NavButton = styled.button`
-  height: 60px;
+  height: ${Styles.BOTTOM_NAVIGATION_HEIGHT};
   width: 20%;
   display: block;
   color: #888;

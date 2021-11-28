@@ -5,10 +5,11 @@ import { RenderRuns } from "./RenderRuns";
 import { RenderPosition } from "./RenderPosition";
 import ShowRunControl from "./ShowRunControl";
 import styled from "styled-components";
+import { Styles } from "../../shared/Styles";
 
 interface Props {}
 
-export const MapMask: FunctionComponent<Props> = ({}: Props) => {
+export const Map: FunctionComponent<Props> = ({}: Props) => {
   const { runs } = useContext(RunnerContext);
   const [showRuns, setShowRuns] = useState(false);
 
@@ -32,6 +33,5 @@ export const MapMask: FunctionComponent<Props> = ({}: Props) => {
 
 const RunMap = styled(MapContainer)`
   width: 100%;
-  height: 400px;
-  border-radius: 8px;
+  height: 75%;
 `;

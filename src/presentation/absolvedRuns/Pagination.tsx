@@ -99,4 +99,5 @@ const PaginationContainer = styled.div`
   display: flex;
   font-size: ${Styles.FONT_SIZE_NORMAL};
   float: right;
+  margin-bottom: 10px;
 `;

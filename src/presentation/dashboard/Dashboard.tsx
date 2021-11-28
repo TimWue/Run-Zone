@@ -30,7 +30,7 @@ export const Dashboard = () => {
     <Container>
       <InfoCard
         property={"Speed"}
-        value={runnerSpeed ? runnerSpeed + " [km/h]" : "--"}
+        value={runnerSpeed ? runnerSpeed + " km/h" : "  0 km/h"}
       />
       <InfoCard
         property={"Time"}
@@ -44,7 +44,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: 50%;
-  padding: 5px;
+  height: 15%;
   flex-wrap: wrap;
 `;

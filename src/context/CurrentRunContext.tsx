@@ -7,7 +7,8 @@ interface CurrentRunProps {
   startTime: number | undefined;
   run: Run | undefined;
   startRun: () => void;
-  stopRun: () => void;
+  stopRun: () => Promise<Run | undefined>;
+  pauseRun: () => void;
   addTrackPoint: (trackPoint: TrackPoint) => void;
   resetRun: () => void;
   isRunning: boolean;
@@ -43,16 +44,24 @@ export const CurrentRunContextProvider = ({ children }: ProviderProps) => {
     setIsRunning(true);
   };
 
-  const stopRun = () => {
+  const pauseRun = () => {
+    console.log("Pause Run");
+    setIsRunning(false);
+  };
+
+  const stopRun = (): Promise<Run | undefined> => {
     console.log("Stop Run");
+    if (trackPoints.length === 0) return Promise.resolve(undefined);
     const track = { trackPoints };
-    setRun({
+    const finishedRun = {
       runId: uuid(),
       track: track,
       startTime: startTime ? startTime : Date.now(),
       endTime: Date.now(),
-    });
+    };
+    setRun(finishedRun);
     setIsRunning(false);
+    return Promise.resolve(finishedRun);
   };
 
   return (
@@ -64,6 +73,7 @@ export const CurrentRunContextProvider = ({ children }: ProviderProps) => {
         run,
         startRun,
         stopRun,
+        pauseRun,
         addTrackPoint,
         resetRun,
       }}

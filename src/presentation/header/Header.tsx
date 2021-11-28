@@ -5,12 +5,22 @@ import { Styles } from "../shared/Styles";
 
 export const Header = () => {
   return (
-    <>
+    <HeaderContainer>
       <Logo>Places</Logo>
       <Menu />
-    </>
+    </HeaderContainer>
   );
 };
+
+const HeaderContainer = styled.div`
+  width: 100%;
+  height: ${Styles.HEADER_HEIGHT};
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 20px 0 5px 0;
+`;
 
 const Logo = styled.h2`
   color: #eee;

@@ -11,6 +11,7 @@ import { Home } from "./presentation/home/Home";
 import { useRunsController } from "./controller/runs/useRunsController";
 import styled from "styled-components";
 import { BottomNavigation } from "./presentation/navigation/BottomNavigation";
+import { Styles } from "./presentation/shared/Styles";
 
 function App() {
   const { runner } = useContext(RunnerContext);
@@ -30,32 +31,28 @@ function App() {
   }
   return (
     <OuterContainer>
-      <HeaderContainer>
-        <Header />
-      </HeaderContainer>
-
-      <Routes>
-        <Route path={Path.ROOT} element={<Home />} />
-        <Route path={Path.NEW} element={<StartRun />} />
-        <Route path={Path.RUNS} element={<AbsolvedRuns />} />
-      </Routes>
+      <Header />
+      <PageContainer>
+        <Routes>
+          <Route path={Path.ROOT} element={<Home />} />
+          <Route path={Path.NEW} element={<StartRun />} />
+          <Route path={Path.RUNS} element={<AbsolvedRuns />} />
+        </Routes>
+      </PageContainer>
       <BottomNavigation />
     </OuterContainer>
   );
 }
 const OuterContainer = styled.div`
-  width: 80%;
-  height: 100%;
-  margin: auto;
+  width: 100vw;
+  height: 100vh - ${Styles.BOTTOM_NAVIGATION_HEIGHT};
 `;
 
-const HeaderContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 1% 0 1% 0;
-  flex-wrap: wrap;
-  margin: 20px 0 20px 0;
+const PageContainer = styled.div`
+  height: calc(
+    100vh - ${Styles.BOTTOM_NAVIGATION_HEIGHT} - ${Styles.HEADER_HEIGHT}
+  );
+  width: 100%;
 `;
 
 export default App;

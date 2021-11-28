@@ -20,19 +20,16 @@ export const InfoCard = ({ property, value }: Props) => {
 };
 
 const Container = styled.div`
-  width: 20%;
+  width: 50%;
   min-width: 120px;
-  background-color: #555;
-  border-radius: 10px;
+  background-color: ${Styles.BACKGROUND_COLOR_SECOND};
   padding: 10px;
-  margin: 10px 5px 10px 5px;
 `;
 
 const Content = styled.div`
   font-family: Open Sans Condensed, sans-serif;
-  font-weight: bold;
-  text-transform: uppercase;
-  color: #eee;
+  font-weight: bolder;
+  color: black;
 `;
 
 const Property = styled(Content)`
