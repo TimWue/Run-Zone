@@ -5,6 +5,7 @@ export interface RunRepository {
   getAllRuns: () => Run[];
   saveRuns: (runs: Run[]) => void;
   deleteRuns: () => void;
+  getRun: (runId: string) => Run | undefined;
 }
 
 export const createRunRepository = (): RunRepository => {
@@ -24,5 +25,9 @@ export const createRunRepository = (): RunRepository => {
     localStorage.removeItem(LocalStorageKeys.RUNNER);
   };
 
-  return { saveRuns, getAllRuns, deleteRuns };
+  const getRun = (runId: string): Run | undefined => {
+    return runs.filter((run) => run.runId === runId).pop();
+  };
+
+  return { saveRuns, getAllRuns, deleteRuns, getRun };
 };
