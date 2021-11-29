@@ -6,6 +6,7 @@ import { Button, ButtonGroup } from "react-bootstrap";
 import styled from "styled-components";
 import { Styles } from "../shared/Styles";
 import { Popup } from "./Popup";
+import { getDistance } from "geolib";
 
 interface Props {}
 
@@ -13,7 +14,8 @@ export const CurrentRunControls: FunctionComponent<Props> = () => {
   const [show, setShow] = useState(false);
   const { addTrackPoint, startRun, stopRun, pauseRun, isRunning } =
     useContext(CurrentRunContext);
-  const { addRun, runs, runnerPosition } = useContext(RunnerContext);
+  const { addRun, runs, runnerPosition, runnerAltitude } =
+    useContext(RunnerContext);
   const runRepository = createRunRepository();
 
   useEffect(() => {
@@ -25,6 +27,7 @@ export const CurrentRunControls: FunctionComponent<Props> = () => {
       addTrackPoint({
         latitude: runnerPosition.lat,
         longitude: runnerPosition.lng,
+        altitude: runnerAltitude,
         time: Date.now(),
       });
   };

@@ -2,6 +2,8 @@ import { createContext, ReactNode, useState } from "react";
 import { Run } from "../domain/run/Run";
 import { TrackPoint } from "../domain/run/TrackPoint";
 import { uuid } from "uuidv4";
+import { getDistance } from "geolib";
+import { Distance } from "../domain/run/Distance";
 
 interface CurrentRunProps {
   startTime: number | undefined;
@@ -25,6 +27,7 @@ interface ProviderProps {
 export const CurrentRunContextProvider = ({ children }: ProviderProps) => {
   const [startTime, setStartTime] = useState<number>();
   const [trackPoints, setTrackPoints] = useState<TrackPoint[]>([]);
+  const [distances, setDistances] = useState<Distance[]>([]);
   const [run, setRun] = useState<Run>();
   const [isRunning, setIsRunning] = useState(false);
 
@@ -34,8 +37,29 @@ export const CurrentRunContextProvider = ({ children }: ProviderProps) => {
     setTrackPoints([]);
   };
   const addTrackPoint = (trackPoint: TrackPoint) => {
+    const distance =
+      trackPoints.length > 0
+        ? calculateDistance(trackPoints[trackPoints.length - 1], trackPoint)
+        : 0;
     console.log("Add TrackPoint: ", trackPoint);
     setTrackPoints((oldState) => [...oldState, trackPoint]);
+    setDistances((oldState) => [...oldState, { distance: distance }]);
+  };
+
+  const calculateDistance = (
+    startTrackPoint: TrackPoint,
+    endTrackPoint: TrackPoint
+  ) => {
+    const start = {
+      latitude: startTrackPoint.latitude,
+      longitude: startTrackPoint.longitude,
+    };
+
+    const end = {
+      latitude: endTrackPoint.latitude,
+      longitude: endTrackPoint.longitude,
+    };
+    return getDistance(start, end, 0.5);
   };
 
   const startRun = () => {
@@ -52,7 +76,7 @@ export const CurrentRunContextProvider = ({ children }: ProviderProps) => {
   const stopRun = (): Promise<Run | undefined> => {
     console.log("Stop Run");
     if (trackPoints.length === 0) return Promise.resolve(undefined);
-    const track = { trackPoints };
+    const track = { trackPoints, distances };
     const finishedRun = {
       runId: uuid(),
       track: track,

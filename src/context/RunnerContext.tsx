@@ -6,6 +6,7 @@ import { LatLng } from "leaflet";
 interface RunnerProps {
   runnerPosition: LatLng | undefined;
   runnerSpeed: string | null;
+  runnerAltitude: number | null;
   runner: Runner | undefined;
   setRunner: (runner: Runner | undefined) => void;
   runs: Run[];
@@ -16,6 +17,7 @@ interface RunnerProps {
 export const RunnerContext = createContext<RunnerProps>({
   runnerPosition: undefined,
   runnerSpeed: null,
+  runnerAltitude: null,
   runner: undefined,
   runs: [],
   setRunner(runner: Runner | undefined): void {},
@@ -32,6 +34,7 @@ export const RunnerContextProvider = ({ children }: ProviderProps) => {
   const [runs, setRuns] = useState<Run[]>([]);
   const [runnerPosition, setRunnerPosition] = useState<LatLng>();
   const [runnerSpeed, setRunnerSpeed] = useState<string | null>(null);
+  const [runnerAltitude, setRunnerAltitude] = useState<number | null>(null);
   const [runner, setRunner] = useState<Runner | undefined>();
   const geoLocationOptions = { enableHighAccuracy: true };
 
@@ -57,8 +60,10 @@ export const RunnerContextProvider = ({ children }: ProviderProps) => {
     setRunnerPosition(
       new LatLng(geoPosition.coords.latitude, geoPosition.coords.longitude)
     );
-    geoPosition.coords.speed &&
-      setRunnerSpeed((geoPosition.coords.speed * 3.6).toFixed(1));
+    const speed = geoPosition.coords.speed;
+    const altitude = geoPosition.coords.altitude;
+    speed && setRunnerSpeed((speed * 3.6).toFixed(1));
+    altitude && setRunnerAltitude(altitude);
   };
 
   useEffect(() => {
@@ -73,6 +78,7 @@ export const RunnerContextProvider = ({ children }: ProviderProps) => {
         runs,
         setRuns,
         runnerPosition,
+        runnerAltitude,
         setRunnerPosition,
         addRun,
         runnerSpeed,

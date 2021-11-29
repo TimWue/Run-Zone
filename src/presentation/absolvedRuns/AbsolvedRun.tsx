@@ -15,7 +15,6 @@ import {
 import { SwipeOverlay } from "../util/SwipeOverlay";
 import { Link } from "react-router-dom";
 import { Path } from "../shared/Path";
-
 interface Props {
   run: Run;
   deleteCallback: (runId: string) => void;
