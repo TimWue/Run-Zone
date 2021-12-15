@@ -1,8 +1,9 @@
 import * as React from "react";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { RunnerContext } from "../../context/RunnerContext";
 import styled from "styled-components";
 import { Styles } from "../shared/Styles";
+import { createSensorRepository } from "../../domain/sensor/SensorRepository";
 
 export const Home = () => {
   const { runner } = useContext(RunnerContext);
