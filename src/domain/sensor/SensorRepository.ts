@@ -2,7 +2,6 @@ import { LatLng } from "leaflet";
 import { Observable } from "rxjs";
 
 interface SensorRepository {
-  getMeasurement: () => Promise<SensorMeasurement>;
   observeMeasurement: Observable<SensorMeasurement>;
 }
 
@@ -32,28 +31,5 @@ export const createSensorRepository = (): SensorRepository => {
       { enableHighAccuracy: true }
     );
   });
-
-  const getMeasurement = (): Promise<SensorMeasurement> => {
-    return new Promise((resolve, reject) => {
-      navigator.geolocation.watchPosition(
-        (geoPosition: GeolocationPosition) => {
-          const position = new LatLng(
-            geoPosition.coords.latitude,
-            geoPosition.coords.longitude
-          );
-          const speed = geoPosition.coords.speed
-            ? geoPosition.coords.speed * 3.6
-            : undefined;
-          const altitude = geoPosition.coords.altitude
-            ? geoPosition.coords.altitude
-            : undefined;
-          resolve({ position, speed, altitude });
-        },
-        (err: any) => reject(err),
-        { enableHighAccuracy: true }
-      );
-    });
-  };
-
-  return { getMeasurement, observeMeasurement };
+  return { observeMeasurement };
 };

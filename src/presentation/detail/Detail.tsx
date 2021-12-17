@@ -33,10 +33,10 @@ import {
 export const Detail: FunctionComponent = () => {
   const { runId } = useParams<string>();
   const runRepository = createRunRepository();
-
   const run = useMemo(() => {
     return runRepository.getRun(runId!);
   }, [runId]);
+  console.log(run);
 
   if (!run) return <div>No run found</div>;
   return (
@@ -45,16 +45,7 @@ export const Detail: FunctionComponent = () => {
       <Details>End:{new Date(run.endTime).toDateString()}</Details>*/}
       <ResponsiveContainer width="90%" height="30%">
         <LineChart data={run.track.distances}>
-          <XAxis
-            dataKey="time"
-            tickLine={false}
-            tickCount={5}
-            tickFormatter={(tick, index) => {
-              return new Date(tick - run?.startTime)
-                .toISOString()
-                .substring(0, 10);
-            }}
-          />
+          <XAxis dataKey="time" />
           <YAxis
             interval={"preserveStartEnd"}
             domain={["dataMin", "dataMax"]}
