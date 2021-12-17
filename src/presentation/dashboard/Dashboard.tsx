@@ -6,7 +6,6 @@ import { InfoCard } from "./InfoCard";
 import styled from "styled-components";
 
 export const Dashboard = () => {
-  const { runnerSpeed } = useContext(RunnerContext);
   const { startTime, isRunning } = useContext(CurrentRunContext);
   const [runTime, setRunTime] = useState(0);
   const [runInterval, setRunInterval] = useState<any>();
@@ -28,10 +27,7 @@ export const Dashboard = () => {
 
   return (
     <Container>
-      <InfoCard
-        property={"Speed"}
-        value={runnerSpeed ? runnerSpeed + " km/h" : "  0 km/h"}
-      />
+      <InfoCard property={"Speed"} value={"0 km/h"} />
       <InfoCard
         property={"Time"}
         value={new Date(runTime).toISOString().substr(11, 8)}

@@ -1,16 +1,23 @@
-import { FunctionComponent, useContext, useEffect } from "react";
+import { FunctionComponent, useContext, useEffect, useState } from "react";
 import { Marker, useMap } from "react-leaflet";
 import { RunnerContext } from "../../../context/RunnerContext";
+import { createSensorRepository } from "../../../domain/sensor/SensorRepository";
+import { LatLng } from "leaflet";
 
 interface Props {}
 
 export const RenderPosition: FunctionComponent<Props> = () => {
-  const { runnerPosition } = useContext(RunnerContext);
+  const [position, setPosition] = useState<LatLng>();
   const map = useMap();
+  const sensorRepository = createSensorRepository();
 
   useEffect(() => {
-    runnerPosition && map.setView(runnerPosition);
-  }, [runnerPosition]);
+    sensorRepository.getMeasurement().then((m) => {
+      const position = new LatLng(m.position.lat, m.position.lng);
+      setPosition(position);
+      map.setView(position);
+    });
+  }, []);
 
-  return <>{runnerPosition && <Marker position={runnerPosition} />}</>;
+  return <>{position && <Marker position={position} />}</>;
 };

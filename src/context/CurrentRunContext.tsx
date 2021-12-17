@@ -1,9 +1,15 @@
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 import { Run } from "../domain/run/Run";
 import { TrackPoint } from "../domain/run/TrackPoint";
 import { uuid } from "uuidv4";
 import { getDistance } from "geolib";
 import { Distance } from "../domain/run/Distance";
+import { createMapService } from "../domain/map/MapService";
+import {
+  createSensorRepository,
+  SensorMeasurement,
+} from "../domain/sensor/SensorRepository";
+import { Subscription } from "rxjs";
 
 interface CurrentRunProps {
   startTime: number | undefined;
@@ -25,11 +31,36 @@ interface ProviderProps {
 }
 
 export const CurrentRunContextProvider = ({ children }: ProviderProps) => {
+  const [subscription, setSubscription] = useState<Subscription>();
   const [startTime, setStartTime] = useState<number>();
   const [trackPoints, setTrackPoints] = useState<TrackPoint[]>([]);
   const [distances, setDistances] = useState<Distance[]>([]);
   const [run, setRun] = useState<Run>();
   const [isRunning, setIsRunning] = useState(false);
+  const mapService = createMapService();
+  const sensorRepository = createSensorRepository();
+
+  useEffect(() => {
+    if (isRunning) {
+      setSubscription(
+        sensorRepository.observeMeasurement.subscribe((m) =>
+          addTrackPoint(createNewTrackPoint(m))
+        )
+      );
+    } else {
+      subscription && subscription.unsubscribe();
+    }
+  }, [isRunning]);
+
+  const createNewTrackPoint = (m: SensorMeasurement): TrackPoint => {
+    return {
+      latitude: m.position.lat,
+      longitude: m.position.lng,
+      altitude: m.altitude,
+      speed: m.speed,
+      time: startTime!,
+    };
+  };
 
   const resetRun = () => {
     setRun(undefined);
@@ -39,27 +70,14 @@ export const CurrentRunContextProvider = ({ children }: ProviderProps) => {
   const addTrackPoint = (trackPoint: TrackPoint) => {
     const distance =
       trackPoints.length > 0
-        ? calculateDistance(trackPoints[trackPoints.length - 1], trackPoint)
+        ? mapService.calcDistance(
+            trackPoints[trackPoints.length - 1],
+            trackPoint
+          )
         : 0;
     console.log("Add TrackPoint: ", trackPoint);
     setTrackPoints((oldState) => [...oldState, trackPoint]);
     setDistances((oldState) => [...oldState, { distance: distance }]);
-  };
-
-  const calculateDistance = (
-    startTrackPoint: TrackPoint,
-    endTrackPoint: TrackPoint
-  ) => {
-    const start = {
-      latitude: startTrackPoint.latitude,
-      longitude: startTrackPoint.longitude,
-    };
-
-    const end = {
-      latitude: endTrackPoint.latitude,
-      longitude: endTrackPoint.longitude,
-    };
-    return getDistance(start, end, 0.5);
   };
 
   const startRun = () => {

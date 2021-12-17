@@ -1,6 +1,7 @@
 export interface TrackPoint {
   latitude: number;
   longitude: number;
-  altitude: number | null;
+  altitude: number | undefined;
+  speed: number | undefined;
   time: number;
 }

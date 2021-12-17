@@ -2,11 +2,9 @@ import { FunctionComponent, useContext, useEffect, useState } from "react";
 import { CurrentRunContext } from "../../context/CurrentRunContext";
 import { RunnerContext } from "../../context/RunnerContext";
 import { createRunRepository } from "../../domain/run/RunRepository";
-import { Button, ButtonGroup } from "react-bootstrap";
 import styled from "styled-components";
 import { Styles } from "../shared/Styles";
 import { Popup } from "./Popup";
-import { getDistance } from "geolib";
 
 interface Props {}
 
@@ -14,23 +12,8 @@ export const CurrentRunControls: FunctionComponent<Props> = () => {
   const [show, setShow] = useState(false);
   const { addTrackPoint, startRun, stopRun, pauseRun, isRunning } =
     useContext(CurrentRunContext);
-  const { addRun, runs, runnerPosition, runnerAltitude } =
-    useContext(RunnerContext);
+  const { addRun, runs } = useContext(RunnerContext);
   const runRepository = createRunRepository();
-
-  useEffect(() => {
-    isRunning && savePositionAsTrack();
-  }, [runnerPosition]);
-
-  const savePositionAsTrack = () => {
-    runnerPosition &&
-      addTrackPoint({
-        latitude: runnerPosition.lat,
-        longitude: runnerPosition.lng,
-        altitude: runnerAltitude,
-        time: Date.now(),
-      });
-  };
 
   const handleStart = () => {
     isRunning ? pauseRun() : startRun();
