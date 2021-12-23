@@ -35,16 +35,13 @@ export const Detail: FunctionComponent = () => {
   const data: any[] = [];
   for (let i = 0; i < run.track.distances.length; i++) {
     data.push({
-      time: run.track.trackPoints[i].time,
+      time: new Date(run.track.trackPoints[i].time - run.startTime)
+        .toISOString()
+        .slice(11, 19),
       distance: run.track.distances[i].distance,
       velocity: run.track.trackPoints[i].speed,
     });
   }
-
-  const formatXAxis = (tickItem: number): string => {
-    const timediff = tickItem - startTime;
-    return new Date(timediff).toISOString().slice(11, 19);
-  };
 
   return (
     <Container>
@@ -69,7 +66,7 @@ export const Detail: FunctionComponent = () => {
               <stop offset="95%" stopColor="#ff8c00" stopOpacity={0} />
             </linearGradient>
           </defs>
-          <XAxis dataKey="time" tickFormatter={formatXAxis} stroke="#fff" />
+          <XAxis dataKey="time" stroke="#fff" />
           <YAxis
             from={0}
             yAxisId="left"
@@ -90,7 +87,7 @@ export const Detail: FunctionComponent = () => {
             orientation="right"
             stroke="#ff8c00"
           />
-          <Tooltip />
+          <Tooltip contentStyle={{ borderRadius: "10px", opacity: 0.5 }} />
           <CartesianGrid
             stroke="#666 "
             vertical={false}
