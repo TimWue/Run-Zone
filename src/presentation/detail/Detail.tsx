@@ -31,20 +31,21 @@ export const Detail: FunctionComponent = () => {
   }, [runId]);
   if (!run) return <div>No run found</div>;
   const startTime = run.startTime;
-  const trackPoints = run.track.trackPoints;
-  const distance = run.track.distances;
+
   const data: any[] = [];
-  for (let i = 0; i < trackPoints.length; i++) {
+  for (let i = 0; i < run.track.distances.length; i++) {
     data.push({
-      time: trackPoints[i].time,
-      distance: distance[i].distance,
+      time: run.track.trackPoints[i].time,
+      distance: run.track.distances[i].distance,
+      velocity: run.track.trackPoints[i].speed,
     });
   }
-  console.log(data);
+
   const formatXAxis = (tickItem: number): string => {
     const timediff = tickItem - startTime;
     return new Date(timediff).toISOString().slice(11, 19);
   };
+
   return (
     <Container>
       <Heading>{new Date(startTime).toISOString().slice(0, 10)}</Heading>
@@ -58,19 +59,37 @@ export const Detail: FunctionComponent = () => {
                 stopOpacity={0.8}
               />
               <stop
-                offset="50%"
-                stopColor={Styles.BACKGROUND_COLOR_SECOND}
-                stopOpacity={0.4}
-              />
-              <stop
                 offset="95%"
                 stopColor={Styles.BACKGROUND_COLOR_SECOND}
                 stopOpacity={0}
               />
             </linearGradient>
+            <linearGradient id="colorVelocity" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#ff8c00" stopOpacity={0.8} />
+              <stop offset="95%" stopColor="#ff8c00" stopOpacity={0} />
+            </linearGradient>
           </defs>
-          <XAxis dataKey="time" tickFormatter={formatXAxis} />
-          <YAxis from={0} />
+          <XAxis dataKey="time" tickFormatter={formatXAxis} stroke="#fff" />
+          <YAxis
+            from={0}
+            yAxisId="left"
+            type="number"
+            dataKey="distance"
+            name="distance"
+            unit="km"
+            orientation="left"
+            stroke={Styles.BACKGROUND_COLOR_SECOND}
+          />
+          <YAxis
+            from={0}
+            yAxisId="right"
+            type="number"
+            dataKey="velocity"
+            name="velocity"
+            unit="km/h"
+            orientation="right"
+            stroke="#ff8c00"
+          />
           <Tooltip />
           <CartesianGrid
             stroke="#666 "
@@ -83,6 +102,15 @@ export const Detail: FunctionComponent = () => {
             stroke={Styles.BACKGROUND_COLOR_SECOND}
             fillOpacity={1}
             fill="url(#colorDistance)"
+            yAxisId={"left"}
+          />
+          <Area
+            type="monotone"
+            dataKey="velocity"
+            stroke="#ff8c00"
+            fillOpacity={1}
+            fill="url(#colorVelocity)"
+            yAxisId={"right"}
           />
         </AreaChart>
       </ResponsiveContainer>
