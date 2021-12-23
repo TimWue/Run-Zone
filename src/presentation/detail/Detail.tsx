@@ -60,7 +60,7 @@ export const Detail: FunctionComponent = () => {
               <stop
                 offset="50%"
                 stopColor={Styles.BACKGROUND_COLOR_SECOND}
-                stopOpacity={0}
+                stopOpacity={0.4}
               />
               <stop
                 offset="95%"
