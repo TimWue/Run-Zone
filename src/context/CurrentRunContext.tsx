@@ -73,7 +73,7 @@ export const CurrentRunContextProvider = ({ children }: ProviderProps) => {
         ? mapService.calcDistance(
             trackPoints[trackPoints.length - 1],
             trackPoint
-          )
+          ) / 1000 // m --> km
         : 0;
     console.log("Add TrackPoint: ", trackPoint);
     setTrackPoints((oldState) => [...oldState, trackPoint]);

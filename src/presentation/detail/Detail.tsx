@@ -32,13 +32,24 @@ export const Detail: FunctionComponent = () => {
   if (!run) return <div>No run found</div>;
   const startTime = run.startTime;
 
+  const accumulate = (arr: number[]) => {
+    return arr.map(
+      (
+        (sum: number) => (value: number) =>
+          (sum += value)
+      )(0)
+    );
+  };
+
   const data: any[] = [];
   for (let i = 0; i < run.track.distances.length; i++) {
     data.push({
       time: new Date(run.track.trackPoints[i].time - run.startTime)
         .toISOString()
         .slice(11, 19),
-      distance: run.track.distances[i].distance,
+      distance: accumulate(run.track.distances.map((value) => value.distance))[
+        i
+      ],
       velocity: run.track.trackPoints[i].speed,
     });
   }
@@ -88,11 +99,7 @@ export const Detail: FunctionComponent = () => {
             stroke="#ff8c00"
           />
           <Tooltip contentStyle={{ borderRadius: "10px", opacity: 0.5 }} />
-          <CartesianGrid
-            stroke="#666 "
-            vertical={false}
-            strokeDasharray="3 3"
-          />
+          <CartesianGrid stroke="#666" vertical={false} strokeDasharray="3 3" />
           <Area
             type="monotone"
             dataKey="distance"
