@@ -58,7 +58,7 @@ export const CurrentRunContextProvider = ({ children }: ProviderProps) => {
       longitude: m.position.lng,
       altitude: m.altitude,
       speed: m.speed,
-      time: startTime!,
+      time: Date.now(),
     };
   };
 
