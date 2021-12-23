@@ -1,14 +1,5 @@
-import React, {
-  FunctionComponent,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
-import { MapContainer, Polyline, TileLayer } from "react-leaflet";
-import { Run } from "../../domain/run/Run";
-import { createMapService } from "../../domain/map/MapService";
-import { LatLng } from "leaflet";
+import React, { FunctionComponent, useMemo, useState } from "react";
+
 import styled from "styled-components";
 import { Styles } from "../shared/Styles";
 
@@ -26,20 +17,35 @@ import {
 } from "recharts";
 
 export class ChartData {
-  static readonly DISTANCE = new ChartData("distance", "distance [km]");
-  static readonly SPEED = new ChartData("speed", "speed [km/h]");
-  static readonly ALTITUDE = new ChartData("altitude", "altitude [m]");
+  static readonly DISTANCE = new ChartData(
+    "distance",
+    "distance [km]",
+    "Distance"
+  );
+  static readonly SPEED = new ChartData("speed", "speed [km/h]", "Speed");
+  static readonly ALTITUDE = new ChartData(
+    "altitude",
+    "altitude [m]",
+    "Altitude"
+  );
   private constructor(
     public readonly dataKey: string,
-    public readonly name: string
+    public readonly name: string,
+    public readonly displayName: string
   ) {}
 }
 
 export const Detail: FunctionComponent = () => {
   const { runId } = useParams<string>();
-
-  const [dataLeft, setDataLeft] = useState(ChartData.DISTANCE);
-  const [dataRight, setDataRight] = useState(ChartData.SPEED);
+  const dataOptions: ChartData[] = [
+    ChartData.DISTANCE,
+    ChartData.SPEED,
+    ChartData.ALTITUDE,
+  ];
+  const [showLeftOptions, setShowLeftOption] = useState(false);
+  const [showRightOptions, setShowRightOption] = useState(false);
+  const [dataLeft, setDataLeft] = useState(dataOptions[0]);
+  const [dataRight, setDataRight] = useState(dataOptions[1]);
   const runRepository = createRunRepository();
   const run = useMemo(() => {
     return runRepository.getRun(runId!);
@@ -66,8 +72,29 @@ export const Detail: FunctionComponent = () => {
         i
       ],
       speed: run.track.trackPoints[i].speed?.toFixed(1),
+      altitude: run.track.trackPoints[i].altitude?.toFixed(1),
     });
   }
+
+  const findOption = (value: string): ChartData => {
+    const selectedOption = dataOptions.filter(
+      (option) => option.displayName === value
+    )[0];
+    if (!selectedOption) throw new Error("No suitable Otion found");
+    return selectedOption;
+  };
+
+  const handleOptionClickLeft = (e: any) => {
+    const selectedOption = findOption(e.target.textContent);
+    setDataLeft(selectedOption);
+    setShowLeftOption(!showLeftOptions);
+  };
+
+  const handleOptionClickRight = (e: any) => {
+    const selectedOption = findOption(e.target.textContent);
+    setDataRight(selectedOption);
+    setShowRightOption(!showRightOptions);
+  };
 
   return (
     <Container>
@@ -152,16 +179,65 @@ export const Detail: FunctionComponent = () => {
           <Legend />
         </AreaChart>
       </ResponsiveContainer>
+      <DataChoosers>
+        <DataChooser onClick={() => setShowLeftOption(!showLeftOptions)}>
+          <Title>Links</Title>
+          {showLeftOptions && (
+            <DataOptions>
+              {dataOptions.map((option) => (
+                <DataOption onClick={handleOptionClickLeft}>
+                  {option.displayName}
+                </DataOption>
+              ))}
+            </DataOptions>
+          )}
+        </DataChooser>
+
+        <DataChooser onClick={() => setShowRightOption(!showRightOptions)}>
+          <Title>Rechts</Title>
+          {showRightOptions && (
+            <DataOptions>
+              {dataOptions.map((option) => (
+                <DataOption onClick={handleOptionClickRight}>
+                  {option.displayName}
+                </DataOption>
+              ))}
+            </DataOptions>
+          )}
+        </DataChooser>
+      </DataChoosers>
     </Container>
   );
 };
+const DataChoosers = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+`;
 
-const Details = styled.div`
+const DataChooser = styled.div``;
+const Title = styled.div`
+  color: black;
+  font-size: ${Styles.FONT_SIZE_NORMAL};
+  background-color: ${Styles.BACKGROUND_COLOR_SECOND};
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+`;
+const DataOptions = styled.ul`
+  list-style-type: none;
+`;
+const DataOption = styled.li`
+  cursor: pointer;
+  background-color: black;
   color: white;
+  padding: 5px;
+  border-radius: 5px;
 `;
 
 const Heading = styled.h1`
   color: white;
+  font-weight: bold;
   font-family: ${Styles.FONT_FAMILY_MAIN};
   font-size: ${Styles.FONT_SIZE_LARGER};
 `;
