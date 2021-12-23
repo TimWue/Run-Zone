@@ -3,6 +3,7 @@ import React, {
   useCallback,
   useEffect,
   useMemo,
+  useState,
 } from "react";
 import { MapContainer, Polyline, TileLayer } from "react-leaflet";
 import { Run } from "../../domain/run/Run";
@@ -17,14 +18,28 @@ import {
   Area,
   AreaChart,
   CartesianGrid,
+  Legend,
   ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
 
+export class ChartData {
+  static readonly DISTANCE = new ChartData("distance", "distance [km]");
+  static readonly SPEED = new ChartData("speed", "speed [km/h]");
+  static readonly ALTITUDE = new ChartData("altitude", "altitude [m]");
+  private constructor(
+    public readonly dataKey: string,
+    public readonly name: string
+  ) {}
+}
+
 export const Detail: FunctionComponent = () => {
   const { runId } = useParams<string>();
+
+  const [dataLeft, setDataLeft] = useState(ChartData.DISTANCE);
+  const [dataRight, setDataRight] = useState(ChartData.SPEED);
   const runRepository = createRunRepository();
   const run = useMemo(() => {
     return runRepository.getRun(runId!);
@@ -46,11 +61,11 @@ export const Detail: FunctionComponent = () => {
     data.push({
       time: new Date(run.track.trackPoints[i].time - run.startTime)
         .toISOString()
-        .slice(11, 19),
+        .slice(12, 19),
       distance: accumulate(run.track.distances.map((value) => value.distance))[
         i
       ],
-      velocity: run.track.trackPoints[i].speed?.toFixed(1),
+      speed: run.track.trackPoints[i].speed?.toFixed(1),
     });
   }
 
@@ -72,7 +87,7 @@ export const Detail: FunctionComponent = () => {
                 stopOpacity={0}
               />
             </linearGradient>
-            <linearGradient id="colorVelocity" x1="0" y1="0" x2="0" y2="1">
+            <linearGradient id="colorSpeed" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor="#ff8c00" stopOpacity={0.8} />
               <stop offset="95%" stopColor="#ff8c00" stopOpacity={0} />
             </linearGradient>
@@ -80,31 +95,9 @@ export const Detail: FunctionComponent = () => {
           <XAxis
             dataKey="time"
             stroke="#fff"
-            tickCount={2}
+            interval={"preserveStartEnd"}
             tick={{ fontSize: Styles.FONT_SIZE_NORMAL }}
             dy={10}
-          />
-          <YAxis
-            from={0}
-            yAxisId="left"
-            type="number"
-            dataKey="distance"
-            name="distance"
-            unit="km"
-            orientation="left"
-            stroke={Styles.BACKGROUND_COLOR_SECOND}
-            dx={-5}
-          />
-          <YAxis
-            from={0}
-            yAxisId="right"
-            type="number"
-            dataKey="velocity"
-            name="velocity"
-            unit="km/h"
-            orientation="right"
-            stroke="#ff8c00"
-            dx={5}
           />
           <Tooltip
             contentStyle={{
@@ -114,22 +107,49 @@ export const Detail: FunctionComponent = () => {
             }}
           />
           <CartesianGrid stroke="#666" vertical={false} strokeDasharray="3 3" />
+
+          <YAxis
+            from={0}
+            yAxisId="left"
+            type="number"
+            dataKey={dataLeft.dataKey}
+            name={dataLeft.name}
+            orientation="left"
+            stroke={Styles.BACKGROUND_COLOR_SECOND}
+            dx={-5}
+            style={{ fontSize: Styles.FONT_SIZE_SMALL }}
+          />
+
           <Area
             type="monotone"
-            dataKey="distance"
+            dataKey={dataLeft.dataKey}
+            name={dataLeft.name}
             stroke={Styles.BACKGROUND_COLOR_SECOND}
             fillOpacity={1}
             fill="url(#colorDistance)"
             yAxisId={"left"}
           />
+
+          <YAxis
+            from={0}
+            yAxisId="right"
+            type="number"
+            dataKey={dataRight.dataKey}
+            name={dataRight.name}
+            orientation="right"
+            stroke="#ff8c00"
+            dx={5}
+          />
           <Area
             type="monotone"
-            dataKey="velocity"
+            dataKey={dataRight.dataKey}
+            name={dataRight.name}
             stroke="#ff8c00"
             fillOpacity={1}
-            fill="url(#colorVelocity)"
+            fill="url(#colorSpeed)"
             yAxisId={"right"}
           />
+          <Legend />
         </AreaChart>
       </ResponsiveContainer>
     </Container>
