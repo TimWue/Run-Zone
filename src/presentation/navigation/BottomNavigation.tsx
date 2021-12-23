@@ -9,6 +9,7 @@ import {
   faBars,
   faBiking,
   faCog,
+  faHome,
   faPlusSquare,
   faRoute,
   faRunning,
@@ -20,6 +21,11 @@ export const BottomNavigation: FunctionComponent = () => {
   return (
     <Container>
       <NavButton>
+        <CustomLink to={Path.ROOT}>
+          <FontAwesomeIcon icon={faHome} />
+        </CustomLink>
+      </NavButton>
+      <NavButton>
         <CustomLink to={Path.NEW}>
           <FontAwesomeIcon icon={faPlusSquare} />
         </CustomLink>
@@ -28,9 +34,6 @@ export const BottomNavigation: FunctionComponent = () => {
         <CustomLink to={Path.RUNS}>
           <FontAwesomeIcon icon={faRunning} />
         </CustomLink>
-      </NavButton>
-      <NavButton>
-        <FontAwesomeIcon icon={faBiking} />
       </NavButton>
       <NavButton>
         <FontAwesomeIcon icon={faUserFriends} />

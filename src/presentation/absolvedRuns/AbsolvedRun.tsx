@@ -68,7 +68,12 @@ export const AbsolvedRun: FunctionComponent<Props> = ({
         </ValueIconContainer>
         <ValueIconContainer>
           <FontAwesomeIcon icon={faRoute} />
-          <ValueContainer>10.2 km</ValueContainer>
+          <ValueContainer>
+            {run.track.distances
+              .map((value) => value.distance)
+              .reduce((acc, val) => acc + val)
+              .toFixed(1) + " km"}
+          </ValueContainer>
         </ValueIconContainer>
         <DetailButton to={Path.RUNS + "/" + run.runId}>Details</DetailButton>
       </InfoContainer>
