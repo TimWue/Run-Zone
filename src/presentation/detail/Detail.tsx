@@ -50,14 +50,14 @@ export const Detail: FunctionComponent = () => {
       distance: accumulate(run.track.distances.map((value) => value.distance))[
         i
       ],
-      velocity: run.track.trackPoints[i].speed,
+      velocity: run.track.trackPoints[i].speed?.toFixed(1),
     });
   }
 
   return (
     <Container>
       <Heading>{new Date(startTime).toISOString().slice(0, 10)}</Heading>
-      <ResponsiveContainer width="80%" height="30%">
+      <ResponsiveContainer width="100%" height="30%" minHeight={"200px"}>
         <AreaChart data={data}>
           <defs>
             <linearGradient id="colorDistance" x1="0" y1="0" x2="0" y2="1">
@@ -77,7 +77,13 @@ export const Detail: FunctionComponent = () => {
               <stop offset="95%" stopColor="#ff8c00" stopOpacity={0} />
             </linearGradient>
           </defs>
-          <XAxis dataKey="time" stroke="#fff" />
+          <XAxis
+            dataKey="time"
+            stroke="#fff"
+            tickCount={2}
+            tick={{ fontSize: Styles.FONT_SIZE_NORMAL }}
+            dy={10}
+          />
           <YAxis
             from={0}
             yAxisId="left"
@@ -87,6 +93,7 @@ export const Detail: FunctionComponent = () => {
             unit="km"
             orientation="left"
             stroke={Styles.BACKGROUND_COLOR_SECOND}
+            dx={-5}
           />
           <YAxis
             from={0}
@@ -97,8 +104,15 @@ export const Detail: FunctionComponent = () => {
             unit="km/h"
             orientation="right"
             stroke="#ff8c00"
+            dx={5}
           />
-          <Tooltip contentStyle={{ borderRadius: "10px", opacity: 0.5 }} />
+          <Tooltip
+            contentStyle={{
+              borderRadius: "10px",
+              opacity: 0.5,
+              maxHeight: "fit-content",
+            }}
+          />
           <CartesianGrid stroke="#666" vertical={false} strokeDasharray="3 3" />
           <Area
             type="monotone"
