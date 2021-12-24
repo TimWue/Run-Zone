@@ -16,6 +16,7 @@ import { Run } from "../../../domain/run/Run";
 import { Gradient } from "./elements/Gradient";
 import { DataSelector } from "./elements/DataSelector";
 import styled from "styled-components";
+import { cumsum } from "d3";
 
 interface Props {
   run: Run;
@@ -39,19 +40,22 @@ export const Chart: FunctionComponent<Props> = ({ run }) => {
     );
   };
 
+  const distanceCumSum = cumsum(
+    run.track.distances.map((value) => value.distance)
+  );
   const data: any[] = [];
-  for (let i = 0; i < run.track.distances.length; i++) {
+  for (let i = 0; i < distanceCumSum.length; i++) {
     data.push({
       time: new Date(run.track.trackPoints[i].time - run.startTime)
         .toISOString()
         .slice(12, 19),
-      distance: accumulate(run.track.distances.map((value) => value.distance))[
-        i
-      ],
+      distance: distanceCumSum[i],
       speed: parseInt(run.track.trackPoints[i].speed?.toFixed(1)!),
       altitude: parseInt(run.track.trackPoints[i].altitude?.toFixed(1)!),
     });
   }
+  console.log(data);
+  console.log(run);
 
   return (
     <>
@@ -70,6 +74,8 @@ export const Chart: FunctionComponent<Props> = ({ run }) => {
             interval={"preserveStartEnd"}
             tick={{ fontSize: Styles.FONT_SIZE_NORMAL }}
             dy={10}
+            angle={-20}
+            style={{ fontSize: Styles.FONT_SIZE_SMALL }}
           />
           <Tooltip
             contentStyle={{

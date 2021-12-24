@@ -2,7 +2,6 @@ import { createContext, ReactNode, useEffect, useState } from "react";
 import { Run } from "../domain/run/Run";
 import { TrackPoint } from "../domain/run/TrackPoint";
 import { uuid } from "uuidv4";
-import { getDistance } from "geolib";
 import { Distance } from "../domain/run/Distance";
 import { createMapService } from "../domain/map/MapService";
 import {
@@ -82,7 +81,7 @@ export const CurrentRunContextProvider = ({ children }: ProviderProps) => {
 
   const startRun = () => {
     console.log("Start Run");
-    setStartTime(Date.now());
+    !startTime && setStartTime(Date.now());
     setIsRunning(true);
   };
 
