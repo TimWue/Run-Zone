@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo, useState } from "react";
+import React, { FunctionComponent, useState } from "react";
 
 import { Styles } from "../../shared/Styles";
 import {
@@ -13,7 +13,9 @@ import {
 } from "recharts";
 import { ChartData } from "./ChartData";
 import { Run } from "../../../domain/run/Run";
-import { DataSelectors } from "./dataSelector/DataSelectors";
+import { Gradient } from "./elements/Gradient";
+import { DataSelector } from "./elements/DataSelector";
+import styled from "styled-components";
 
 interface Props {
   run: Run;
@@ -56,22 +58,11 @@ export const Chart: FunctionComponent<Props> = ({ run }) => {
       <ResponsiveContainer width="100%" height="30%" minHeight={"200px"}>
         <AreaChart data={data}>
           <defs>
-            <linearGradient id="colorDistance" x1="0" y1="0" x2="0" y2="1">
-              <stop
-                offset="5%"
-                stopColor={Styles.BACKGROUND_COLOR_SECOND}
-                stopOpacity={0.8}
-              />
-              <stop
-                offset="95%"
-                stopColor={Styles.BACKGROUND_COLOR_SECOND}
-                stopOpacity={0}
-              />
-            </linearGradient>
-            <linearGradient id="colorSpeed" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#ff8c00" stopOpacity={0.8} />
-              <stop offset="95%" stopColor="#ff8c00" stopOpacity={0} />
-            </linearGradient>
+            <Gradient
+              id="colorDistance"
+              color={Styles.BACKGROUND_COLOR_SECOND}
+            />
+            <Gradient id="colorSpeed" color={Styles.BACKGROUND_COLOR_THIRD} />
           </defs>
           <XAxis
             dataKey="time"
@@ -90,7 +81,6 @@ export const Chart: FunctionComponent<Props> = ({ run }) => {
           <CartesianGrid stroke="#666" vertical={false} strokeDasharray="3 3" />
 
           <YAxis
-            from={0}
             yAxisId="left"
             type="number"
             dataKey={dataLeft.dataKey}
@@ -113,7 +103,6 @@ export const Chart: FunctionComponent<Props> = ({ run }) => {
           />
 
           <YAxis
-            from={0}
             yAxisId="right"
             type="number"
             dataKey={dataRight.dataKey}
@@ -133,14 +122,29 @@ export const Chart: FunctionComponent<Props> = ({ run }) => {
             fill="url(#colorSpeed)"
             yAxisId={"right"}
           />
-          <Legend />
         </AreaChart>
       </ResponsiveContainer>
-      <DataSelectors
-        dataOptions={dataOptions}
-        setDataLeft={setDataLeft}
-        setDataRight={setDataRight}
-      />
+      <DataChoosers>
+        <DataSelector
+          dataOptions={dataOptions}
+          setData={setDataLeft}
+          title={dataLeft.name}
+          backgroundColor={Styles.BACKGROUND_COLOR_SECOND}
+        />
+        <DataSelector
+          dataOptions={dataOptions}
+          setData={setDataRight}
+          title={dataRight.name}
+          backgroundColor={Styles.BACKGROUND_COLOR_THIRD}
+        />
+      </DataChoosers>
     </>
   );
 };
+
+const DataChoosers = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  padding-top: 20px;
+`;

@@ -8,12 +8,14 @@ interface Props {
   dataOptions: ChartData[];
   setData: (chartData: ChartData) => void;
   title: string;
+  backgroundColor: string;
 }
 
 export const DataSelector: FunctionComponent<Props> = ({
   dataOptions,
   setData,
   title,
+  backgroundColor,
 }) => {
   const [showOptions, setShowOption] = useState(false);
 
@@ -33,7 +35,7 @@ export const DataSelector: FunctionComponent<Props> = ({
 
   return (
     <DataChooser onClick={() => setShowOption(!showOptions)}>
-      <Title>{title}</Title>
+      <Title backgroundColor={backgroundColor}>{title}</Title>
       {showOptions && (
         <DataOptions>
           {dataOptions.map((option, index) => (
@@ -46,18 +48,23 @@ export const DataSelector: FunctionComponent<Props> = ({
     </DataChooser>
   );
 };
-
+interface TitleProps {
+  backgroundColor: string;
+}
 const DataChooser = styled.div``;
-const Title = styled.div`
+
+const Title = styled.div<TitleProps>`
   color: black;
   font-size: ${Styles.FONT_SIZE_NORMAL};
-  background-color: ${Styles.BACKGROUND_COLOR_SECOND};
+  background-color: ${(props) => props.backgroundColor};
   padding: 5px;
   border-radius: 5px;
   cursor: pointer;
 `;
 const DataOptions = styled.ul`
   list-style-type: none;
+  margin: 0;
+  padding: 0;
 `;
 const DataOption = styled.li`
   cursor: pointer;

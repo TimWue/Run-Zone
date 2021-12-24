@@ -17,7 +17,7 @@ export const Detail: FunctionComponent = () => {
   if (!run) return <div>No run found</div>;
   return (
     <Container>
-      <Heading>{new Date(run.startTime).toISOString().slice(0, 10)}</Heading>
+      <Heading>{new Date(run.startTime).toLocaleString()}</Heading>
       <Chart run={run} />
     </Container>
   );
