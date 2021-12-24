@@ -89,7 +89,6 @@ export const Chart: FunctionComponent<Props> = ({ run }) => {
             stroke={Styles.BACKGROUND_COLOR_SECOND}
             dx={-5}
             style={{ fontSize: Styles.FONT_SIZE_SMALL }}
-            domain={[0, "dataMax"]}
           />
 
           <Area
@@ -111,7 +110,6 @@ export const Chart: FunctionComponent<Props> = ({ run }) => {
             stroke="#ff8c00"
             dx={5}
             style={{ fontSize: Styles.FONT_SIZE_SMALL }}
-            domain={[0, "dataMax"]}
           />
           <Area
             type="monotone"
