@@ -48,8 +48,8 @@ export const Chart: FunctionComponent<Props> = ({ run }) => {
       distance: accumulate(run.track.distances.map((value) => value.distance))[
         i
       ],
-      speed: run.track.trackPoints[i].speed?.toFixed(1),
-      altitude: run.track.trackPoints[i].altitude?.toFixed(1),
+      speed: parseInt(run.track.trackPoints[i].speed?.toFixed(1)!),
+      altitude: parseInt(run.track.trackPoints[i].altitude?.toFixed(1)!),
     });
   }
 
@@ -110,7 +110,7 @@ export const Chart: FunctionComponent<Props> = ({ run }) => {
             stroke="#ff8c00"
             dx={5}
             style={{ fontSize: Styles.FONT_SIZE_SMALL }}
-            domain={[0, 1000]}
+            domain={[0, "dataMax"]}
           />
           <Area
             type="monotone"
