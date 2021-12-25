@@ -1,5 +1,5 @@
 import { TrackPoint } from "../run/TrackPoint";
-import { LatLngTuple } from "leaflet";
+import { LatLng, LatLngTuple } from "leaflet";
 import { area, polygon } from "@turf/turf";
 import { getDistance } from "geolib";
 
@@ -28,16 +28,13 @@ export const createMapService = (): MapService => {
     startTrackPoint: TrackPoint,
     endTrackPoint: TrackPoint
   ) => {
-    const start = {
-      latitude: startTrackPoint.latitude,
-      longitude: startTrackPoint.longitude,
-    };
+    const start = new LatLng(
+      startTrackPoint.latitude,
+      startTrackPoint.longitude
+    );
+    const end = new LatLng(endTrackPoint.latitude, endTrackPoint.longitude);
 
-    const end = {
-      latitude: endTrackPoint.latitude,
-      longitude: endTrackPoint.longitude,
-    };
-    return getDistance(start, end, 0.5);
+    return start.distanceTo(end);
   };
 
   return { calcArea, track2Polygon, calcDistance };

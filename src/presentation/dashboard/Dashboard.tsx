@@ -36,6 +36,7 @@ export const Dashboard = () => {
     } else {
       subscription && subscription.unsubscribe();
       runInterval && clearInterval(runInterval);
+      setRunTime(0);
     }
   }, [isRunning]);
 

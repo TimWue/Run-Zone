@@ -51,6 +51,20 @@ export const CurrentRunContextProvider = ({ children }: ProviderProps) => {
     }
   }, [isRunning]);
 
+  useEffect(() => {
+    if (trackPoints.length > 0) {
+      //otherwise we would have more distances than trackpoints
+      const distance =
+        trackPoints.length > 1
+          ? mapService.calcDistance(
+              trackPoints[trackPoints.length - 2],
+              trackPoints[trackPoints.length - 1]
+            ) / 1000 // m --> km
+          : 0;
+      setDistances((oldState) => [...oldState, { distance: distance }]);
+    }
+  }, [trackPoints]);
+
   const createNewTrackPoint = (m: SensorMeasurement): TrackPoint => {
     return {
       latitude: m.position.lat,
@@ -66,17 +80,10 @@ export const CurrentRunContextProvider = ({ children }: ProviderProps) => {
     setStartTime(undefined);
     setTrackPoints([]);
   };
+
   const addTrackPoint = (trackPoint: TrackPoint) => {
-    const distance =
-      trackPoints.length > 0
-        ? mapService.calcDistance(
-            trackPoints[trackPoints.length - 1],
-            trackPoint
-          ) / 1000 // m --> km
-        : 0;
     console.log("Add TrackPoint: ", trackPoint);
     setTrackPoints((oldState) => [...oldState, trackPoint]);
-    setDistances((oldState) => [...oldState, { distance: distance }]);
   };
 
   const startRun = () => {
@@ -102,6 +109,9 @@ export const CurrentRunContextProvider = ({ children }: ProviderProps) => {
     };
     setRun(finishedRun);
     setIsRunning(false);
+    setTrackPoints([]);
+    setStartTime(undefined);
+    setDistances([]);
     return Promise.resolve(finishedRun);
   };
 

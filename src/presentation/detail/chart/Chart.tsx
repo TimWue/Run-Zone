@@ -16,7 +16,8 @@ import { Run } from "../../../domain/run/Run";
 import { Gradient } from "./elements/Gradient";
 import { DataSelector } from "./elements/DataSelector";
 import styled from "styled-components";
-import { cumsum } from "d3";
+import { cumsum, json } from "d3";
+import { createMapService } from "../../../domain/map/MapService";
 
 interface Props {
   run: Run;
@@ -30,19 +31,10 @@ export const Chart: FunctionComponent<Props> = ({ run }) => {
 
   const [dataLeft, setDataLeft] = useState(dataOptions[0]);
   const [dataRight, setDataRight] = useState(dataOptions[1]);
-
-  const accumulate = (arr: number[]) => {
-    return arr.map(
-      (
-        (sum: number) => (value: number) =>
-          (sum += value)
-      )(0)
-    );
-  };
-
   const distanceCumSum = cumsum(
     run.track.distances.map((value) => value.distance)
   );
+
   const data: any[] = [];
   for (let i = 0; i < distanceCumSum.length; i++) {
     data.push({
@@ -54,8 +46,6 @@ export const Chart: FunctionComponent<Props> = ({ run }) => {
       altitude: parseInt(run.track.trackPoints[i].altitude?.toFixed(1)!),
     });
   }
-  console.log(data);
-  console.log(run);
 
   return (
     <>
