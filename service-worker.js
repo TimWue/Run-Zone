@@ -5,5 +5,5 @@ self.addEventListener("fetch", function (event) {
 
 self.addEventListener('message', function (evt) {
   console.log('postMessage received', evt.data);
-  self.registration.showNotification(evt.data)
+  setTimeout(()=>  self.registration.showNotification(evt.data),10000)
 })
