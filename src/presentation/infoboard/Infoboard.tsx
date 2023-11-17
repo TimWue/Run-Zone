@@ -7,7 +7,7 @@ import styled from "styled-components";
 import { createSensorRepository } from "../../domain/sensor/SensorRepository";
 import { Subscription } from "rxjs";
 
-export const Dashboard = () => {
+export const Infoboard = () => {
   const { startTime, isRunning } = useContext(CurrentRunContext);
   const [runTime, setRunTime] = useState(0);
   const [speed, setSpeed] = useState(0);

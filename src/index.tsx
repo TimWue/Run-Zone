@@ -1,12 +1,22 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
+import "./globals.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { RunnerContextProvider } from "./context/RunnerContext";
 import { CurrentRunContextProvider } from "./context/CurrentRunContext";
-import { HashRouter } from "react-router-dom";
+import {BrowserRouter, HashRouter, useHref} from "react-router-dom";
 
+const requestNotificationPermission = async () => {
+    const permission = await Notification.requestPermission();
+
+    if (permission !== 'granted') {
+        throw new Error("Notification permission not granted")
+    }
+
+}
+requestNotificationPermission()
 ReactDOM.render(
   <React.StrictMode>
     <RunnerContextProvider>

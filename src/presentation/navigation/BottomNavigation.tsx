@@ -15,33 +15,45 @@ import {
   faRunning,
   faUserFriends,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import {NavigationMenu} from "@radix-ui/react-navigation-menu";
+import {
+    NavigationMenuContent, NavigationMenuItem,
+    NavigationMenuLink,
+    NavigationMenuList,
+    NavigationMenuTrigger
+} from "../../components/ui/navigation-menu";
+import {Link} from "react-router-dom";
 
 export const BottomNavigation: FunctionComponent = () => {
   return (
-    <Container>
-      <NavButton>
-        <CustomLink to={Path.ROOT}>
-          <FontAwesomeIcon icon={faHome} />
-        </CustomLink>
-      </NavButton>
-      <NavButton>
-        <CustomLink to={Path.NEW}>
-          <FontAwesomeIcon icon={faPlusSquare} />
-        </CustomLink>
-      </NavButton>
-      <NavButton>
-        <CustomLink to={Path.RUNS}>
-          <FontAwesomeIcon icon={faRunning} />
-        </CustomLink>
-      </NavButton>
-      <NavButton>
-        <FontAwesomeIcon icon={faUserFriends} />
-      </NavButton>
-      <NavButton>
-        <FontAwesomeIcon icon={faCog} />
-      </NavButton>
-    </Container>
+    <div>
+        <NavigationMenu >
+            <NavigationMenuList>
+                <NavigationMenuLink>Link</NavigationMenuLink>
+            </NavigationMenuList>
+        </NavigationMenu>
+      {/*<NavButton>*/}
+      {/*  <CustomLink to={Path.ROOT}>*/}
+      {/*    <FontAwesomeIcon icon={faHome} />*/}
+      {/*  </CustomLink>*/}
+      {/*</NavButton>*/}
+      {/*<NavButton>*/}
+      {/*  <CustomLink to={Path.NEW}>*/}
+      {/*    <FontAwesomeIcon icon={faPlusSquare} />*/}
+      {/*  </CustomLink>*/}
+      {/*</NavButton>*/}
+      {/*<NavButton>*/}
+      {/*  <CustomLink to={Path.RUNS}>*/}
+      {/*    <FontAwesomeIcon icon={faRunning} />*/}
+      {/*  </CustomLink>*/}
+      {/*</NavButton>*/}
+      {/*<NavButton>*/}
+      {/*  <FontAwesomeIcon icon={faUserFriends} />*/}
+      {/*</NavButton>*/}
+      {/*<NavButton>*/}
+      {/*  <FontAwesomeIcon icon={faCog} />*/}
+      {/*</NavButton>*/}
+    </div>
   );
 };
 

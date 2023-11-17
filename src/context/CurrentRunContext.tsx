@@ -1,7 +1,6 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { Run } from "../domain/run/Run";
 import { TrackPoint } from "../domain/run/TrackPoint";
-import { uuid } from "uuidv4";
 import { Distance } from "../domain/run/Distance";
 import { createMapService } from "../domain/map/MapService";
 import {
@@ -9,6 +8,7 @@ import {
   SensorMeasurement,
 } from "../domain/sensor/SensorRepository";
 import { Subscription } from "rxjs";
+
 
 interface CurrentRunProps {
   startTime: number | undefined;
@@ -87,6 +87,9 @@ export const CurrentRunContextProvider = ({ children }: ProviderProps) => {
   };
 
   const startRun = () => {
+    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+      navigator.serviceWorker.controller.postMessage("start");
+    }
     console.log("Start Run");
     !startTime && setStartTime(Date.now());
     setIsRunning(true);
@@ -98,11 +101,14 @@ export const CurrentRunContextProvider = ({ children }: ProviderProps) => {
   };
 
   const stopRun = (): Promise<Run | undefined> => {
+    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+      navigator.serviceWorker.controller.postMessage("stop");
+    }
     console.log("Stop Run");
     if (trackPoints.length === 0) return Promise.resolve(undefined);
     const track = { trackPoints, distances };
     const finishedRun = {
-      runId: uuid(),
+      runId: crypto.randomUUID(),
       track: track,
       startTime: startTime ? startTime : Date.now(),
       endTime: Date.now(),
