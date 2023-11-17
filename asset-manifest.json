@@ -1,22 +1,15 @@
 {
   "files": {
-    "main.css": "/Run-Zone/static/css/main.b95b7fac.chunk.css",
-    "main.js": "/Run-Zone/static/js/main.46274d5c.chunk.js",
-    "main.js.map": "/Run-Zone/static/js/main.46274d5c.chunk.js.map",
-    "runtime-main.js": "/Run-Zone/static/js/runtime-main.74e087fe.js",
-    "runtime-main.js.map": "/Run-Zone/static/js/runtime-main.74e087fe.js.map",
-    "static/js/2.96cfc148.chunk.js": "/Run-Zone/static/js/2.96cfc148.chunk.js",
-    "static/js/2.96cfc148.chunk.js.map": "/Run-Zone/static/js/2.96cfc148.chunk.js.map",
-    "static/js/3.0f4e9f18.chunk.js": "/Run-Zone/static/js/3.0f4e9f18.chunk.js",
-    "static/js/3.0f4e9f18.chunk.js.map": "/Run-Zone/static/js/3.0f4e9f18.chunk.js.map",
+    "main.css": "/Run-Zone/static/css/main.4bcc46ea.css",
+    "main.js": "/Run-Zone/static/js/main.20a42996.js",
+    "static/js/787.b939043e.chunk.js": "/Run-Zone/static/js/787.b939043e.chunk.js",
     "index.html": "/Run-Zone/index.html",
-    "static/css/main.b95b7fac.chunk.css.map": "/Run-Zone/static/css/main.b95b7fac.chunk.css.map",
-    "static/js/2.96cfc148.chunk.js.LICENSE.txt": "/Run-Zone/static/js/2.96cfc148.chunk.js.LICENSE.txt"
+    "main.4bcc46ea.css.map": "/Run-Zone/static/css/main.4bcc46ea.css.map",
+    "main.20a42996.js.map": "/Run-Zone/static/js/main.20a42996.js.map",
+    "787.b939043e.chunk.js.map": "/Run-Zone/static/js/787.b939043e.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.74e087fe.js",
-    "static/js/2.96cfc148.chunk.js",
-    "static/css/main.b95b7fac.chunk.css",
-    "static/js/main.46274d5c.chunk.js"
+    "static/css/main.4bcc46ea.css",
+    "static/js/main.20a42996.js"
   ]
 }
