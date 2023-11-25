@@ -1,15 +1,16 @@
 {
   "files": {
-    "main.css": "/Run-Zone/static/css/main.4350bb07.css",
-    "main.js": "/Run-Zone/static/js/main.98500fad.js",
+    "main.css": "/Run-Zone/static/css/main.dcb5cd1f.css",
+    "main.js": "/Run-Zone/static/js/main.44861e94.js",
     "static/js/787.b939043e.chunk.js": "/Run-Zone/static/js/787.b939043e.chunk.js",
     "index.html": "/Run-Zone/index.html",
-    "main.4350bb07.css.map": "/Run-Zone/static/css/main.4350bb07.css.map",
-    "main.98500fad.js.map": "/Run-Zone/static/js/main.98500fad.js.map",
+    "static/media/run-zone-logo.svg": "/Run-Zone/static/media/run-zone-logo.9d836d07c4845cac406617bed4864228.svg",
+    "main.dcb5cd1f.css.map": "/Run-Zone/static/css/main.dcb5cd1f.css.map",
+    "main.44861e94.js.map": "/Run-Zone/static/js/main.44861e94.js.map",
     "787.b939043e.chunk.js.map": "/Run-Zone/static/js/787.b939043e.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.4350bb07.css",
-    "static/js/main.98500fad.js"
+    "static/css/main.dcb5cd1f.css",
+    "static/js/main.44861e94.js"
   ]
 }
